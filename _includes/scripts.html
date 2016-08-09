@@ -1,0 +1,23 @@
+<script src="{{ "/js/what-input.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/foundation.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/plugins.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/parallaxify.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/app.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/ajax-form.min.js" | prepend: site.baseurl }}"></script>
+<script>new Parallaxify().registerUpdate()</script>
+<script>
+    var header = document.querySelector('#autoHide');
+
+    new Headroom(header, {
+        tolerance: {
+            down: 2,
+            up: 5
+        },
+        offset: 100,
+        classes: {
+            initial: 'slide',
+            pinned: 'slideReset',
+            unpinned: 'slideUp'
+        }
+    }).init();
+</script>
