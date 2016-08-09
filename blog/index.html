@@ -1,91 +1,85 @@
 ---
 layout: default
 ---
-<div class="mainWrapper">
-
-    <div class="heroWrapper relPosition">
-        <div class="heroSmall js-Parallaxify" style="background-image: url('/img/hero/cloudy-day-mountains-2200x800.jpg');" data-parallaxify-y-min="50" data-parallaxify-y-max="100">
-            <div class="horizontalCenter">
-                <div class="row">
-                    <div class="small-11 medium-8 small-centered columns padding">
-                        <div class="pageTitle">
-                            <h1 class="text-center">Blog</h1>
-                        </div>
+<div class="heroWrapper relPosition">
+    <div class="heroSmall js-Parallaxify" style="background-image: url('/img/hero/cloudy-day-mountains-2200x800.jpg');" data-parallaxify-y-min="50" data-parallaxify-y-max="100">
+        <div class="horizontalCenter">
+            <div class="row">
+                <div class="small-11 medium-8 small-centered columns padding">
+                    <div class="pageTitle">
+                        <h1 class="text-center">Blog</h1>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row marginTop">
-        <div class="small-12 columns noPadding">
-            <div class="blogList">
-
-                {% for post in paginator.posts %}
-                <div class="blogItem">
-                    <div class="row">
-                        <div class="small-12 columns">
-                            <div class="blogItemMeta">
-                                <p class="postCategory">
-                                    {{ post.tags | array_to_sentence_string }}
-                                </p>
-                                <p class="postDate">{{ post.date | date: "%b %-d, %Y" }}</p>
-                            </div>
-                        </div>
-
-                        <div class="small-12 columns">
-                            <h3 class="postTitle"><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
-                            {{ post.excerpt }}
-                            <div class="link">
-                                <a href="{{ post.url | prepend: site.baseurl }}">Read More<span class="icon-arrow-right"></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-
-            </div>
-        </div>
-    </div>
-
-    <div class="row marginTop marginBottom">
-        <div class="small-12 columns">
-            <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-
-                {% if paginator.previous_page %}
-                <li class="pagination-previous"><a href="{{ paginator.previous_page_path }}" class="previous">Previous</a></li>
-                {% else %}
-                <li class="pagination-previous disabled">Previous</li>
-                {% endif %}
-
-                <li><a {% if paginator.page == 1 %}class="current"{% endif %} href="/blog" aria-label="Page 1">1</a></li>
-
-                {% if paginator.page > 2 %}
-                <li class="ellipsis" aria-hidden="true"></li>
-                {% endif %}
-
-                {% if paginator.page != 1 and paginator.page != paginator.total_pages %}
-                <li><a class="current" href="/blog/page{{paginator.page}}" aria-label="Page {{paginator.page}}">{{paginator.page}}</a></li>
-                {% endif %}
-
-                {% assign totalMinus = paginator.total_pages | minus: 1 %}
-                {% if paginator.page < totalMinus %}
-                <li class="ellipsis rob" aria-hidden="true"></li>
-                {% endif %}
-
-                {% if paginator.total_pages > 1 %}
-                <li><a {% if paginator.page == paginator.total_pages %}class="current"{% endif %} href="/blog/page{{paginator.total_pages}}" aria-label="Page {{paginator.total_pages}}">{{paginator.total_pages}}</a></li>
-                {% endif %}
-
-                {% if paginator.next_page %}
-                <li class="pagination-next"><a href="{{ paginator.next_page_path }}" aria-label="Next page">Next</a></li>
-                {% else %}
-                <li class="pagination-next disabled">Next</li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-
 </div>
 
+<div class="row marginTop">
+    <div class="small-12 columns noPadding">
+        <div class="blogList">
 
+            {% for post in paginator.posts %}
+            <div class="blogItem">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <div class="blogItemMeta">
+                            <p class="postCategory">
+                                {{ post.tags | array_to_sentence_string }}
+                            </p>
+                            <p class="postDate">{{ post.date | date: "%b %-d, %Y" }}</p>
+                        </div>
+                    </div>
+
+                    <div class="small-12 columns">
+                        <h3 class="postTitle"><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
+                        {{ post.excerpt }}
+                        <div class="link">
+                            <a href="{{ post.url | prepend: site.baseurl }}">Read More<span class="icon-arrow-right"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+<div class="row marginTop marginBottom">
+    <div class="small-12 columns">
+        <ul class="pagination text-center" role="navigation" aria-label="Pagination">
+
+            {% if paginator.previous_page %}
+            <li class="pagination-previous"><a href="{{ paginator.previous_page_path }}" class="previous">Previous</a></li>
+            {% else %}
+            <li class="pagination-previous disabled">Previous</li>
+            {% endif %}
+
+            <li><a {% if paginator.page == 1 %} class="current" {% endif %} href="/blog" aria-label="Page 1">1</a></li>
+
+            {% if paginator.page > 2 %}
+            <li class="ellipsis" aria-hidden="true"></li>
+            {% endif %}
+
+            {% if paginator.page != 1 and paginator.page != paginator.total_pages %}
+            <li><a class="current" href="/blog/page{{paginator.page}}" aria-label="Page {{paginator.page}}">{{paginator.page}}</a></li>
+            {% endif %}
+
+            {% assign totalMinus = paginator.total_pages | minus: 1 %}
+            {% if paginator.page < totalMinus %}
+            <li class="ellipsis rob" aria-hidden="true"></li>
+            {% endif %}
+
+            {% if paginator.total_pages > 1 %}
+            <li><a {% if paginator.page == paginator.total_pages %} class="current" {% endif %} href="/blog/page{{paginator.total_pages}}" aria-label="Page {{paginator.total_pages}}">{{paginator.total_pages}}</a></li>
+            {% endif %}
+
+            {% if paginator.next_page %}
+            <li class="pagination-next"><a href="{{ paginator.next_page_path }}" aria-label="Next page">Next</a></li>
+            {% else %}
+            <li class="pagination-next disabled">Next</li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

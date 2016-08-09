@@ -3,112 +3,108 @@ layout: default
 ---
 <article itemscope itemtype="http://schema.org/BlogPosting">
 
-    <div class="mainWrapper">
+    <div class="heroWrapper relPosition">
+        <div class="heroBlog " style="background-image: url('{{page.hero_img}}'); background-position: 50% 50%;"></div>
+    </div>
 
-        <div class="heroWrapper relPosition">
-            <div class="heroBlog " style="background-image: url('{{page.hero_img}}'); background-position: 50% 50%;"></div>
-        </div>
-
-        <div class="postMeta">
-            <div class="row">
-                <div class="small-12 columns noPadding">
-                    <div class="blogItemMeta">
-                        <p class="postCategory">
-                            {{ page.tags | array_to_sentence_string }}
-                        </p>
-                        <p class="postDate"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time></p>
-                        <p class="postShareIcons">
-                            Share:
-                            <a href="#"><span class="icon-facebook"></span></a>
-                            <a href="#"><span class="icon-twitter"></span></a>
-                            <a href="#"><span class="icon-google-plus"></span></a>
-                            <!--<a href="#"><span class="icon-pinterest"></span></a>
-                            <a href="#"><span class="icon-tumblr"></span></a>-->
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row marginBottom">
-
+    <div class="postMeta">
+        <div class="row">
             <div class="small-12 columns noPadding">
-
-                <div class="postContent">
-
-                    <h2 class="postTitle" itemprop="name headline">{{ page.title }}</h2>
-                    <div class="postEntry" itemprop="articleBody">
-                        {{ content }}
-                    </div>
-
-                    {% if page.previous.url or page.next.url %}
-                    <div class="row">
-                        <div class="small-12 columns">
-                            <div class="postNav clearfix">
-                                {% if page.previous.url %}
-                                <a href="{{page.previous.url}}" class="prevPost">
-                                    <span class="icon-arrow-left float-left"></span>
-                                    <div class="postNavTitle">
-                                        <span>Previous Post:</span>
-                                        <p>{{page.previous.title}}</p>
-                                    </div>
-                                </a>
-                                {% endif %}
-                                {% if page.next.url %}
-                                <a href="{{page.next.url}}" class="nextPost">
-                                    <span class="icon-arrow-right float-right"></span>
-                                    <div class="postNavTitle">
-                                        <span>Next Post:</span>
-                                        <p>{{page.next.title}}</p>
-                                    </div>
-                                </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    {% if page.author %}
-
-                    <div class="row">
-                        <div class="small-12 columns">
-                            <div class="divider"></div>
-                        </div>
-                    </div>
-
-                    <div class="authorBox row relPosition">
-
-                        <div class="small-12 medium-2 columns noPadding">
-                            <div class="authorImg imgShadow">
-                                <img src="{{ page.author_img}}" alt="{{ page.author}}">
-                            </div>
-                        </div>
-
-                        <div class="small-12 medium-10 columns">
-                            <div class="authorContent bgGray" itemscope itemtype="http://schema.org/Person" itemprop="author">
-                                <h6 itemprop="name">{{ page.author }}</h6>
-                                {% if page.author_bio %}
-                                <p>{{ page.author_bio }}</p>
-                                {% endif %}
-                                <div>
-                                    {% if page.author_github %}
-                                    <a href="https://github.com/{{ page.author_github }}"><span class="icon-github"></span></a>
-                                    {% endif %}
-                                    {% if page.author_twitter %}
-                                    <a href="https://twitter.com/{{ page.author_twitter }}"><span class="icon-twitter"></span></a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {% endif %}
-
+                <div class="blogItemMeta">
+                    <p class="postCategory">
+                        {{ page.tags | array_to_sentence_string }}
+                    </p>
+                    <p class="postDate"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time></p>
+                    <p class="postShareIcons">
+                        Share:
+                        <a href="#"><span class="icon-facebook"></span></a>
+                        <a href="#"><span class="icon-twitter"></span></a>
+                        <a href="#"><span class="icon-google-plus"></span></a>
+                        <!--<a href="#"><span class="icon-pinterest"></span></a>
+                        <a href="#"><span class="icon-tumblr"></span></a>-->
+                    </p>
                 </div>
-
             </div>
         </div>
+    </div>
 
+    <div class="row marginBottom">
+
+        <div class="small-12 columns noPadding">
+
+            <div class="postContent">
+
+                <h2 class="postTitle" itemprop="name headline">{{ page.title }}</h2>
+                <div class="postEntry" itemprop="articleBody">
+                    {{ content }}
+                </div>
+
+                {% if page.previous.url or page.next.url %}
+                <div class="row">
+                    <div class="small-12 columns">
+                        <div class="postNav clearfix">
+                            {% if page.previous.url %}
+                            <a href="{{page.previous.url}}" class="prevPost">
+                                <span class="icon-arrow-left float-left"></span>
+                                <div class="postNavTitle">
+                                    <span>Previous Post:</span>
+                                    <p>{{page.previous.title}}</p>
+                                </div>
+                            </a>
+                            {% endif %}
+                            {% if page.next.url %}
+                            <a href="{{page.next.url}}" class="nextPost">
+                                <span class="icon-arrow-right float-right"></span>
+                                <div class="postNavTitle">
+                                    <span>Next Post:</span>
+                                    <p>{{page.next.title}}</p>
+                                </div>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if page.author %}
+
+                <div class="row">
+                    <div class="small-12 columns">
+                        <div class="divider"></div>
+                    </div>
+                </div>
+
+                <div class="authorBox row relPosition">
+
+                    <div class="small-12 medium-2 columns noPadding">
+                        <div class="authorImg imgShadow">
+                            <img src="{{ page.author_img}}" alt="{{ page.author}}">
+                        </div>
+                    </div>
+
+                    <div class="small-12 medium-10 columns">
+                        <div class="authorContent bgGray" itemscope itemtype="http://schema.org/Person" itemprop="author">
+                            <h6 itemprop="name">{{ page.author }}</h6>
+                            {% if page.author_bio %}
+                            <p>{{ page.author_bio }}</p>
+                            {% endif %}
+                            <div>
+                                {% if page.author_github %}
+                                <a href="https://github.com/{{ page.author_github }}"><span class="icon-github"></span></a>
+                                {% endif %}
+                                {% if page.author_twitter %}
+                                <a href="https://twitter.com/{{ page.author_twitter }}"><span class="icon-twitter"></span></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
     </div>
 
 </article>

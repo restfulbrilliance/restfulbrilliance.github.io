@@ -10,7 +10,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var autoPrefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
-var cleanCSS = require('gulp-clean-css');
+//var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var child = require('child_process');
@@ -36,9 +36,9 @@ gulp.task('sass-compile', function (gulpCallBack) {
     return mergeStream(sassStream, cssStream)
       .pipe(autoPrefixer({ browsers: ['last 2 versions', 'ie >= 9'] }))
       .pipe(gulp.dest('_site/css/'))
-      .pipe(rename({ suffix: '.min' }))
-      .pipe(cleanCSS())
-      .pipe(gulp.dest('_site/css/'))
+      //.pipe(rename({ suffix: '.min' }))
+      //.pipe(cleanCSS())
+      //.pipe(gulp.dest('_site/css/'))
       .pipe(browserSync.stream());
 
     gulpCallBack(null);
@@ -127,13 +127,9 @@ gulp.task('browser-sync-serve', ['jekyll-build'], function () {
         }
     });
 
-    gulp.watch(['_layouts/**/*.html',
-                '_includes/**/*.html',
-                '_posts/**/*.md',
-                '_posts/**/*.markdown',
-                '*.md',
-                '*.html',
-                'blog/*.html',
+    gulp.watch(['**/*.html',
+                '**/*.md',
+                '**/*.markdown',
                 'img/**/*.*'], ['browser-sync-html-reload']);
     gulp.watch(['_sass/**/*.scss',
                 'css/**/*.css'], ['sass-compile']);
