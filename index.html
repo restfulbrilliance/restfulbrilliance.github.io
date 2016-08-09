@@ -618,11 +618,11 @@ layout: default
         <div class="small-12 medium-8 columns">
             <div id="contact">
                 <div id="form-messages"></div>
-                <form data-abide novalidate id="contactForm" name="contactForm" action="https://formspree.io/your@email.com" method="post">
+                <form data-abide novalidate id="contactForm" name="contactForm" action="https://formspree.io/rstrube@restfulbrilliance.com" method="post">
                     <div class="row">
                         <div class="small-12 medium-6 columns">
                             <label>
-                                <input name="fullname" type="text" placeholder="Your full name">
+                                <input name="name" type="text" placeholder="Your full name">
                             </label>
                         </div>
                         <div class="small-12 medium-6 columns">
@@ -654,6 +654,10 @@ layout: default
                             </label>
                         </div>
                     </div>
+
+                    <input type="hidden" name="_subject" value="Contact Information Received from RB Website!" />
+                    <input type="hidden" name="_cc" value="pthompson@restfulbrilliance.com" />
+                    <input type="text" name="_gotcha" style="display:none" />
 
                     <div class="row">
                         <div class="small-12 columns">

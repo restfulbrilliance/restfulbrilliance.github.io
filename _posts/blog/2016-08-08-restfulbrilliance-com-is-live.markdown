@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Restfulbrilliance.com is Live!"
-date:   2016-08-04 18:00:00 -0400
+date:   2016-08-08 18:00:00 -0400
 tags: announcements
 hero_img: "/img/hero/light-house-sunset-2200x1200.jpg"
 ---
