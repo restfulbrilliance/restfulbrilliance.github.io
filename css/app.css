@@ -457,16 +457,19 @@ body > .js-Parallaxify { background-size: cover; }
   display: inline-block;
 }
 
-.title::before,
-.titleCenter::after {
-  display: block;
-  content: '';
-  position: absolute;
-  width: 60px;
-  height: 2px;
-  background: rgba(21, 21, 21, 1);
-  top: 14px;
-  left: 110%;
+/* rs: added this to prevent nav bug in mobile when you have long titles */
+@media only screen and (min-width: 64em) {
+    .title::before,
+    .titleCenter::after {
+        display: block;
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 2px;
+        background: rgba(21, 21, 21, 1);
+        top: 14px;
+        left: 110%;
+    }
 }
 
 .titleCenter {

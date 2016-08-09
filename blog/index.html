@@ -12,9 +12,9 @@
     <link rel="shortcut icon" href="/img/favicons/favicon-32x32.png">
     <link href='https://fonts.googleapis.com/css?family=Anaheim%7CQuattrocento+Sans:400,400italic,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/compiled-foundation.css" />
+    <link rel="stylesheet" href="/css/app.css" />
     <link rel="stylesheet" href="/css/icomoon.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
-    <link rel="stylesheet" href="/css/app.css" />
 
     <!-- Scripts -->
     <script src="/js/jquery.min.js"></script>
@@ -31,7 +31,7 @@
 <div class="flbackdrop"></div>
 
 <header class="relPosition fixedHeader">
-    <div class="menuBar" id="autoHide">
+    <div class="menuBar slide headroom--top" id="autoHide">
         <div class="row expanded">
             <div class="small-6 medium-3 columns">
                 <div id="logo">
@@ -53,8 +53,6 @@
                         
                         <li class="navLink">
                             <a class="navIcon" href="https://www.twitter.com/restbrilliance"><span class="icon-twitter"></span></a>
-                            <!--<a class="navIcon" href="#"><span class="icon-facebook"></span></a>
-                            <a class="navIcon" href="#"><span class="icon-google-plus"></span></a>-->
                         </li>
                     </ul>
                 </div>
@@ -63,87 +61,80 @@
     </div>
 </header>
     <div class="mainWrapper">
-
-    <div class="heroWrapper relPosition">
-        <div class="heroSmall js-Parallaxify" style="background-image: url('/img/hero/cloudy-day-mountains-2200x800.jpg');" data-parallaxify-y-min="50" data-parallaxify-y-max="100">
-            <div class="horizontalCenter">
-                <div class="row">
-                    <div class="small-11 medium-8 small-centered columns padding">
-                        <div class="pageTitle">
-                            <h1 class="text-center">Blog</h1>
-                        </div>
+        <div class="heroWrapper relPosition">
+    <div class="heroSmall js-Parallaxify" style="background-image: url('/img/hero/cloudy-day-mountains-2200x800.jpg');" data-parallaxify-y-min="50" data-parallaxify-y-max="100">
+        <div class="horizontalCenter">
+            <div class="row">
+                <div class="small-11 medium-8 small-centered columns padding">
+                    <div class="pageTitle">
+                        <h1 class="text-center">Blog</h1>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row marginTop">
-        <div class="small-12 columns noPadding">
-            <div class="blogList">
-
-                
-                <div class="blogItem">
-                    <div class="row">
-                        <div class="small-12 columns">
-                            <div class="blogItemMeta">
-                                <p class="postCategory">
-                                    announcements
-                                </p>
-                                <p class="postDate">Aug 8, 2016</p>
-                            </div>
-                        </div>
-
-                        <div class="small-12 columns">
-                            <h3 class="postTitle"><a href="/blog/2016/08/08/restfulbrilliance-com-is-live.html">Restfulbrilliance.com is Live!</a></h3>
-                            <p>We’re extremely happy that Restfulbrilliance.com has finally gone live!  We’ve got some exciting new projects on the horizon that we’re looking forward to sharing with everybody.</p>
-
-
-                            <div class="link">
-                                <a href="/blog/2016/08/08/restfulbrilliance-com-is-live.html">Read More<span class="icon-arrow-right"></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-
-            </div>
-        </div>
-    </div>
-
-    <div class="row marginTop marginBottom">
-        <div class="small-12 columns">
-            <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-
-                
-                <li class="pagination-previous disabled">Previous</li>
-                
-
-                <li><a class="current" href="/blog" aria-label="Page 1">1</a></li>
-
-                
-
-                
-
-                
-                
-
-                
-
-                
-                <li class="pagination-next disabled">Next</li>
-                
-            </ul>
-        </div>
-    </div>
-
 </div>
 
+<div class="row marginTop">
+    <div class="small-12 columns noPadding">
+        <div class="blogList">
+
+            
+            <div class="blogItem">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <div class="blogItemMeta">
+                            <p class="postCategory">
+                                announcements
+                            </p>
+                            <p class="postDate">Aug 8, 2016</p>
+                        </div>
+                    </div>
+
+                    <div class="small-12 columns">
+                        <h3 class="postTitle"><a href="/blog/2016/08/08/restfulbrilliance-com-is-live.html">Restfulbrilliance.com is Live!</a></h3>
+                        <p>We’re extremely happy that Restfulbrilliance.com has finally gone live!  We’ve got some exciting new projects on the horizon that we’re looking forward to sharing with everybody.</p>
 
 
-    <footer>
+                        <div class="link">
+                            <a href="/blog/2016/08/08/restfulbrilliance-com-is-live.html">Read More<span class="icon-arrow-right"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="row marginTop marginBottom">
+    <div class="small-12 columns">
+        <ul class="pagination text-center" role="navigation" aria-label="Pagination">
+
+            
+            <li class="pagination-previous disabled">Previous</li>
+            
+
+            <li><a  class="current"  href="/blog" aria-label="Page 1">1</a></li>
+
+            
+
+            
+
+            
+            
+
+            
+
+            
+            <li class="pagination-next disabled">Next</li>
+            
+        </ul>
+    </div>
+</div>
+        <footer>
     <div class="row expanded footerWrapper">
-
         <div class="small-12 medium-7 large-8 columns">
             <div class="row">
                 <div class="small-12 columns">
@@ -173,9 +164,9 @@
                 </div>
             </div>
         </div>
-
     </div>
 </footer>
+    </div>
     <script src="/js/what-input.min.js"></script>
 <script src="/js/foundation.min.js"></script>
 <script src="/js/plugins.min.js"></script>
