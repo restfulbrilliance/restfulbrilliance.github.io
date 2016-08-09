@@ -26,7 +26,7 @@ $(function() {
 			$(formNotifications).addClass('successMsg');
 
 			// Set the message text.
-			$(formNotifications).text(response);
+			$(formNotifications).text("Thanks for reaching out to us! You'll hear back from us shortly.");
 
 			// Clear the form.
 			$('#formName').val('');
@@ -40,12 +40,12 @@ $(function() {
 			$(formNotifications).removeClass('successMsg');
 			$(formNotifications).addClass('errorMsg');
 
-			// Set the message text.
-			if (data.responseText !== '') {
-				$(formNotifications).text(data.responseText);
-			} else {
+			//// Set the message text.
+			//if (data.responseText !== '') {
+			//	$(formNotifications).text(data.responseText);
+			//} else {
 				$(formNotifications).text('Oops! An error occured and your message could not be sent.');
-			}
+			//}
 		});
 
 	});
