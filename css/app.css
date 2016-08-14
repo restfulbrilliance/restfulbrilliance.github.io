@@ -472,10 +472,22 @@ body > .js-Parallaxify { background-size: cover; }
   display: inline-block;
 }
 
-/* rs: added this to prevent nav bug in mobile when you have long titles */
+/*====== rs: added this to prevent nav bug in mobile when you have long titles, also removed titleCenter ::after styling */
 @media only screen and (min-width: 64em) {
-    .title::before,
+
+    /*.title::before,
     .titleCenter::after {
+        display: block;
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 2px;
+        background: rgba(21, 21, 21, 1);
+        top: 14px;
+        left: 110%;
+    }*/
+
+    .title::before {
         display: block;
         content: '';
         position: absolute;
@@ -486,12 +498,20 @@ body > .js-Parallaxify { background-size: cover; }
         left: 110%;
     }
 }
+/*======*/
+
+/*====== rs: removed extra margin for .titleCenter */
+/*.titleCenter {
+  text-align: center;
+  display: block;
+  margin-bottom: 110px;
+}*/
 
 .titleCenter {
   text-align: center;
   display: block;
-  margin-bottom: 110px;
 }
+/*======*/
 
 .pageTitle span {
   position: relative;
@@ -500,7 +520,8 @@ body > .js-Parallaxify { background-size: cover; }
   font-size: 2rem;
 }
 
-.pageTitle::after,
+/*====== rs: removed .titleCenter::after */
+/*.pageTitle::after,
 .pageTitle::before,
 .titleCenter::after {
   display: block;
@@ -512,20 +533,45 @@ body > .js-Parallaxify { background-size: cover; }
   left: 50%;
   margin-left: -40px;
   margin-top: 1rem;
-}
+}*/
 
-.pageTitle::before,
+.pageTitle::after,
+.pageTitle::before {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 5rem;
+  height: 2px;
+  background: rgba(21, 21, 21, 1);
+  left: 50%;
+  margin-left: -40px;
+  margin-top: 1rem;
+}
+/*======*/
+
+/* rs: removed .titleCenter::after */
+/*.pageTitle::before,
 .titleCenter::after {
   width: 2px;
   height: 110px;
   top: -80px;
   margin: 0;
-}
+}*/
 
-.titleCenter::after {
+.pageTitle::before {
+  width: 2px;
+  height: 110px;
+  top: -80px;
+  margin: 0;
+}
+/*======*/
+
+/*====== rs: removed .titleCenter::after */
+/*.titleCenter::after {
   height: 60px;
   top: 145%;
-}
+}*/
+/*======*/
 
 .bgColor .pageTitle,
 .bgBlack .pageTitle { color: rgba(255, 255, 255, 1); }
@@ -1228,13 +1274,25 @@ select { font-size: 0.875rem; }
 
 #contact .input-group .input-group-field { margin-bottom: 0; }
 
-#contact form input:focus,
+/*====== rs: changed focus color */
+/*#contact form input:focus,
 #contact textarea:focus,
 #contact form select:focus,
 #mc_form input:focus {
   background-color: rgba(255, 255, 255, 0.5);
   outline: none;
 }
+*/
+
+#contact form input:focus,
+#contact textarea:focus,
+#contact form select:focus,
+#mc_form input:focus {
+  background-color: #4c48cf;
+  color: white;
+  outline: none;
+}
+/*======*/
 
 #mc_form button {
   position: absolute;
@@ -1264,6 +1322,32 @@ select { font-size: 0.875rem; }
    color: #ffffff;
 }
 
+/*===== rs: changed placeholder text to default to white when focused */
+#contact form input:focus::-webkit-input-placeholder,
+#contact textarea:focus::-webkit-input-placeholder,
+#contact form select:focus::-webkit-input-placeholder,
+#mc_form input:focus::-webkit-input-placeholder {
+   color: #ffffff;
+   opacity: 0.75;
+}
+
+#contact form input:focus::-moz-placeholder,
+#contact textarea:focus::-moz-placeholder,
+#contact form select:focus::-moz-placeholder,
+#mc_form input:focus::-moz-placeholder {
+   color: #ffffff;
+   opacity: 0.75;
+}
+
+#contact form input:focus:-ms-input-placeholder,
+#contact textarea:focus:-ms-input-placeholder,
+#contact form select:focus:-ms-input-placeholder,
+#mc_form input:focus:-ms-input-placeholder {
+   color: #ffffff;
+   opacity: 0.75;
+}
+/*======*/
+
 .bgBlack #contact form input,
 .bgBlack #contact textarea,
 .bgColor #contact form input,
@@ -1276,7 +1360,10 @@ select { font-size: 0.875rem; }
 .bgBlack #mc_form button,
 .bgColor #mc_form button { color: white; }
 
-textarea { height: 200px; }
+/*====== rs: changed text area height to 100px */
+/*textarea { height: 200px; }*/
+textarea { height: 100px; }
+/*======*/
 
 .errorMsg,
 .successMsg {
