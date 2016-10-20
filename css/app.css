@@ -5,7 +5,7 @@
     Description: Minimal HTML5 Template for Professionals
     Author: Pixelosaur
     Author URI: http://themeforest.net/user/Pixelosaur
-    Version: 1.0
+    Version: 1.1
 
 -------------------------------------------------------------------*/
 
@@ -431,6 +431,10 @@ div[data-vide-bg]::after {
   line-height: 1;
   letter-spacing: -6px;
 }
+
+.badge.body-font,
+.badge.header,
+.label { background: rgba(76, 72, 207, 1); }
 
 /* parallaxify styles */
 
@@ -2955,6 +2959,7 @@ div.folioNav-vertical a.is-checked::before {
 .portfolio { margin-left: 0; }
 
 .folioGrid.portfolioGutter .gallery-item,
+.lightboxGallery.portfolioGutter .gallery-item,
 [class^="folioMasonry"].portfolioGutter .gallery-item { padding: 0 1rem 2rem 1rem; }
 
 .portfolioMeta {

@@ -1,17 +1,17 @@
 {
-  "name": "foundation-sites-template",
+  "name": "bliss-framework",
   "version": "1.0.0",
   "authors": [
-    "ZURB <foundation@zurb.com>"
+    "Restful Brilliance <bliss@restfulbrilliance.com>"
   ],
-  "description": "Basic template for a new Foundation for Sites project.",
+  "description": "Template for a new site based on the Bliss blogging framework.",
   "main": "index.html",
   "license": "MIT",
-  "homepage": "http://foundation.zurb.com",
+  "homepage": "http://restfulbrilliance.com/bliss",
   "dependencies": {
-    "foundation-sites": "~6.2.0",
-    "motion-ui": "~1.2.2",
-    "jquery-cookie": "~1.4.1"
+    "foundation-sites": "6.2.3",
+    "motion-ui": "1.2.2",
+    "jquery-cookie": "1.4.1"
   },
   "ignore": [
     "**/.*",

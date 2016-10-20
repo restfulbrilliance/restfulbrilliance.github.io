@@ -6,66 +6,66 @@
 
 -------------------------------------------------------------------*/
 
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var autoPrefixer = require('gulp-autoprefixer');
-var rename = require('gulp-rename');
-//var cleanCSS = require('gulp-clean-css');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var child = require('child_process');
-var util = require('gulp-util');
-var browserSync = require('browser-sync').create();
-var mergeStream = require('merge-stream');
+var _gulp = require('gulp');
+var _gulpSass = require('gulp-sass');
+var _gulpAutoPrefixer = require('gulp-autoprefixer');
+var _gulpRename = require('gulp-rename');
+//var _gulpCleanCss = require('gulp-clean-css');
+//var _gulpConcat = require('gulp-concat');
+var _gulpUglify = require('gulp-uglify');
+var _childProcess = require('child_process');
+var _gulpUtil = require('gulp-util');
+var _browserSync = require('browser-sync').create();
+var _mergeStream = require('merge-stream');
 
-var foundationSassPaths = [
+var _foundationSassPaths = [
   'bower_components/foundation-sites/scss',
   'bower_components/motion-ui/src'
 ];
 
 var jekyllExec = process.platform === "win32" ? "jekyll.bat" : "jekyll";
 
-gulp.task('sass-compile', function (gulpCallBack) {
+_gulp.task('sass-compile', function (gulpCallBack) {
 
-    var sassStream = gulp.src('_sass/compiled-foundation.scss')
-      .pipe(sass({ includePaths: foundationSassPaths, outputStyle: 'expanded' })
-      .on('error', sass.logError));
+    var sassStream = _gulp.src('_sass/compiled-foundation.scss')
+      .pipe(_gulpSass({ includePaths: _foundationSassPaths, outputStyle: 'expanded' })
+      .on('error', _gulpSass.logError));
 
-    var cssStream = gulp.src(['css/**/*.css']);
+    var cssStream = _gulp.src(['css/**/*.css']);
 
-    return mergeStream(sassStream, cssStream)
-      .pipe(autoPrefixer({ browsers: ['last 2 versions', 'ie >= 9'] }))
-      .pipe(gulp.dest('_site/css/'))
-      //.pipe(rename({ suffix: '.min' }))
-      //.pipe(cleanCSS())
-      //.pipe(gulp.dest('_site/css/'))
-      .pipe(browserSync.stream());
+    return _mergeStream(sassStream, cssStream)
+      .pipe(_gulpAutoPrefixer({ browsers: ['last 2 versions', 'ie >= 9'] }))
+      .pipe(_gulp.dest('_site/css/'))
+      //.pipe(_gulpRename({ suffix: '.min' }))
+      //.pipe(_gulpCleanCss())
+      //.pipe(_gulp.dest('_site/css/'))
+      .pipe(_browserSync.stream());
 
     gulpCallBack(null);
 });
 
-gulp.task('js-compile', function (gulpCallBack) {
-    return gulp.src(['bower_components/jquery/dist/jquery.js',
+_gulp.task('js-compile', function (gulpCallBack) {
+    return _gulp.src(['bower_components/jquery/dist/jquery.js',
                      'bower_components/what-input/what-input.js',
                      'bower_components/foundation-sites/dist/foundation.js',
                      'bower_components/jquery-cookie/jquery.cookie.js',
                      'js/**/*.js'])
-      .pipe(gulp.dest('_site/js/'))
-      .pipe(rename({ suffix: '.min' }))
-      .pipe(uglify())
-      .pipe(gulp.dest('_site/js/'));
+      .pipe(_gulp.dest('_site/js/'))
+      .pipe(_gulpRename({ suffix: '.min' }))
+      .pipe(_gulpUglify())
+      .pipe(_gulp.dest('_site/js/'));
 
     gulpCallBack(null);
 });
 
-gulp.task('jekyll-clean', function (gulpCallBack) {
+_gulp.task('jekyll-clean', function (gulpCallBack) {
 
-    var jekyll = child.spawn(jekyllExec, ['clean']);
+    var jekyll = _childProcess.spawn(jekyllExec, ['clean']);
 
     var jekyllLogger = (buffer) => {
         buffer.toString()
           .split(/\n/)
-          .forEach((message) => util.log('Jekyll: ' + message));
+          .forEach((message) => _gulpUtil.log('Jekyll: ' + message));
     };
 
     jekyll.stdout.on('data', jekyllLogger);
@@ -74,7 +74,7 @@ gulp.task('jekyll-clean', function (gulpCallBack) {
     jekyll.on('exit', function (code) {
 
         if (code === 0) {
-            util.log('Jekyll: [clean] Exited Successfully');
+            _gulpUtil.log('Jekyll: [clean] Exited Successfully');
             gulpCallBack(null);
         }
 
@@ -84,14 +84,14 @@ gulp.task('jekyll-clean', function (gulpCallBack) {
     });
 });
 
-gulp.task('jekyll-build', ['sass-compile', 'js-compile'], function (gulpCallBack) {
+_gulp.task('jekyll-build', ['sass-compile', 'js-compile'], function (gulpCallBack) {
 
-    var jekyll = child.spawn(jekyllExec, ['build']);
+    var jekyll = _childProcess.spawn(jekyllExec, ['build']);
 
     var jekyllLogger = function (buffer) {
         buffer.toString()
           .split(/\n/)
-          .forEach((message) => util.log('Jekyll: ' + message));
+          .forEach((message) => _gulpUtil.log('Jekyll: ' + message));
     };
 
     jekyll.stdout.on('data', jekyllLogger);
@@ -100,7 +100,7 @@ gulp.task('jekyll-build', ['sass-compile', 'js-compile'], function (gulpCallBack
     jekyll.on('exit', function (code) {
 
         if (code === 0){
-            util.log('Jekyll: [build] Exited Successfully');
+            _gulpUtil.log('Jekyll: [build] Exited Successfully');
             gulpCallBack(null);
         }
 
@@ -111,30 +111,30 @@ gulp.task('jekyll-build', ['sass-compile', 'js-compile'], function (gulpCallBack
     });
 });
 
-gulp.task('browser-sync-js-reload', ['js-compile'], function () {
-    browserSync.reload();
+_gulp.task('browser-sync-js-reload', ['js-compile'], function () {
+    _browserSync.reload();
 });
 
-gulp.task('browser-sync-html-reload', ['jekyll-build'], function () {
-    browserSync.reload();
+_gulp.task('browser-sync-html-reload', ['jekyll-build'], function () {
+    _browserSync.reload();
 });
 
-gulp.task('browser-sync-serve', ['jekyll-build'], function () {
+_gulp.task('browser-sync-serve', ['jekyll-build'], function () {
 
-    browserSync.init({
+    _browserSync.init({
         server: {
             baseDir: './_site'
         }
     });
 
-    gulp.watch(['**/*.html',
+    _gulp.watch(['**/*.html',
                 '**/*.md',
                 '**/*.markdown',
                 'img/**/*.*'], ['browser-sync-html-reload']);
-    gulp.watch(['_sass/**/*.scss',
+    _gulp.watch(['_sass/**/*.scss',
                 'css/**/*.css'], ['sass-compile']);
-    gulp.watch(['js/**/*.js'], ['browser-sync-js-reload']);
+    _gulp.watch(['js/**/*.js'], ['browser-sync-js-reload']);
 });
 
-gulp.task('default', ['browser-sync-serve'], function () {
+_gulp.task('default', ['browser-sync-serve'], function () {
 });
