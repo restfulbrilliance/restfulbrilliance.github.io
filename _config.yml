@@ -46,9 +46,9 @@ exclude: ['node_modules',
 		  'RB.sln']
 
 # This tells Jekyll to keep the Gulp generated CSS and JS in the _site directory
-keep_files: ['_site/css',
-			 '_site/js',
-			 '_site/.git']
+keep_files: ['css',
+			 'js',
+			 '.git']
 
 defaults:
   - scope:
