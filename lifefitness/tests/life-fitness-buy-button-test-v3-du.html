@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>
+    </title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <img src="http://ww1.prweb.com/prfiles/2012/10/11/10005217/Life_Fitness.jpg" alt="Life Fitness logo" style="width:304px;">
+
+    <div  style="margin-left: 75px;">
+
+        <h1>Life Fitness: Buy Button Test Page (Dutch)</h1>
+        <p>The buy button integration code below creates an integration with the following specifications:</p>
+        <table>
+            <tr>
+                <td>Shopify Storefront:</td>
+                <td><pre>life-fitness-benelux-dutch.myshopify.com</pre></td>
+            </tr>
+            <tr>
+                <td>SKU ID:</td>
+                <td><pre>PH-PCFEE-IWXXD-0101C</pre></td>
+            </tr>
+            <tr>
+                <td>Button Color:</td>
+                <td><pre>#4196b4</pre></td>
+            </tr>
+            <tr>
+                <td>Button Text Color:</td>
+                <td><pre>#ffffff</pre></td>
+            </tr>
+            <tr>
+                <td>Product Name:</td>
+                <td><pre>Platinum Club Series Flexstrider variabele paslengte met Discover SE Console in Artic Silver</pre></td>
+            </tr>
+            <tr>
+                <td>Product Name Color:</td>
+                <td><pre>#000000</pre></td>
+            </tr>
+        </table>
+
+        <!-- begin shopify buy button code-->
+        <div id='product-component-PH-PCFEE-IWXXD-0101C'></div>
+        <script type="text/javascript">
+            /*<![CDATA[*/
+
+            (function () {
+                var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+                if (window.ShopifyBuy) {
+                    if (window.ShopifyBuy.UI) {
+                        ShopifyBuyInit();
+                    } else {
+                        loadScript();
+                    }
+                } else {
+                    loadScript();
+                }
+
+                function loadScript() {
+                    var script = document.createElement('script');
+                    script.async = true;
+                    script.src = scriptURL;
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+                    script.onload = ShopifyBuyInit;
+                }
+
+                function ShopifyBuyInit() {
+                    var client = ShopifyBuy.buildClient({
+                        domain: 'life-fitness-benelux-dutch.myshopify.com',
+                        apiKey: '69bfff636a3db0fe3301477ce226278a',
+                        appId: '6',
+                    });
+
+                    ShopifyBuy.UI.onReady(client).then(function (ui) {
+                        ui.createComponent('product', {
+                            handle: ['PH-PCFEE-IWXXD-0101C'],
+                            node: document.getElementById('product-component-PH-PCFEE-IWXXD-0101C'),
+                            moneyFormat: '%E2%82%AC%7B%7Bamount%7D%7D',
+                            options: {
+                                "product": {
+                                    "variantId": "all",
+                                    "width": "240px",
+                                    "contents": {
+                                        "img": false,
+                                        "title": false,
+                                        "variantTitle": false,
+                                        "price": false,
+                                        "description": false,
+                                        "buttonWithQuantity": false,
+                                        "quantity": false
+                                    },
+                                    "styles": {
+                                        "product": {
+                                            "text-align": "left",
+                                            "@media (min-width: 601px)": {
+                                                "max-width": "calc(25% - 20px)",
+                                                "margin-left": "20px",
+                                                "margin-bottom": "50px"
+                                            }
+                                        },
+                                        "button": {
+                                            "background-color": "#4196b4",
+                                            "font-size": "13px",
+                                            "padding-top": "14.5px",
+                                            "padding-bottom": "14.5px",
+                                            ":hover": {
+                                                "background-color": "#3b87a2"
+                                            },
+                                            "border-radius": "0px",
+                                            ":focus": {
+                                                "background-color": "#3b87a2"
+                                            }
+                                        },
+                                        "quantityInput": {
+                                            "font-size": "13px",
+                                            "padding-top": "14.5px",
+                                            "padding-bottom": "14.5px"
+                                        }
+                                    }
+                                },
+                                "cart": {
+                                    "contents": {
+                                        "button": true
+                                    },
+                                    "styles": {
+                                        "button": {
+                                            "background-color": "#4196b4",
+                                            "font-size": "13px",
+                                            "padding-top": "14.5px",
+                                            "padding-bottom": "14.5px",
+                                            ":hover": {
+                                                "background-color": "#3b87a2"
+                                            },
+                                            "border-radius": "0px",
+                                            ":focus": {
+                                                "background-color": "#3b87a2"
+                                            }
+                                        },
+                                        "footer": {
+                                            "background-color": "#ffffff"
+                                        }
+                                    }
+                                },
+                                "modalProduct": {
+                                    "contents": {
+                                        "variantTitle": false,
+                                        "buttonWithQuantity": false,
+                                        "quantity": false
+                                    },
+                                    "styles": {
+                                        "product": {
+                                            "@media (min-width: 601px)": {
+                                                "max-width": "100%",
+                                                "margin-left": "0px",
+                                                "margin-bottom": "0px"
+                                            }
+                                        },
+                                        "button": {
+                                            "background-color": "#4196b4",
+                                            "font-size": "13px",
+                                            "padding-top": "14.5px",
+                                            "padding-bottom": "14.5px",
+                                            ":hover": {
+                                                "background-color": "#3b87a2"
+                                            },
+                                            "border-radius": "0px",
+                                            ":focus": {
+                                                "background-color": "#3b87a2"
+                                            }
+                                        },
+                                        "quantityInput": {
+                                            "font-size": "13px",
+                                            "padding-top": "14.5px",
+                                            "padding-bottom": "14.5px"
+                                        }
+                                    }
+                                },
+                                "toggle": {
+                                    "styles": {
+                                        "toggle": {
+                                            "background-color": "#4196b4",
+                                            ":hover": {
+                                                "background-color": "#3b87a2"
+                                            },
+                                            ":focus": {
+                                                "background-color": "#3b87a2"
+                                            }
+                                        },
+                                        "count": {
+                                            "font-size": "13px"
+                                        }
+                                    }
+                                },
+                                "productSet": {
+                                    "styles": {
+                                        "products": {
+                                            "@media (min-width: 601px)": {
+                                                "margin-left": "-20px"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+            })();
+/*]]>*/
+        </script>
+        <!-- end shopify buy button code -->
+
+    </div>
+</body>
+</html>
