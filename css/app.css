@@ -807,6 +807,7 @@ body > .js-Parallaxify { background-size: cover; }
 }
 
 .menuOverlay ul li {
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -1523,8 +1524,7 @@ textarea { height: 100px; }
 
 .swiper-container-autoheight .swiper-wrapper {
   -ms-flex-align: start;
-  -ms-grid-row-align: flex-start;
-      align-items: flex-start;
+  align-items: flex-start;
   transition-property: transform, height;
 }
 
@@ -1777,6 +1777,7 @@ button.swiper-pagination-bullet {
 .swiper-container-cube .swiper-slide,
 .swiper-container-flip .swiper-slide {
   pointer-events: none;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   z-index: 1;
 }
@@ -1799,6 +1800,7 @@ button.swiper-pagination-bullet {
 .swiper-container-cube .swiper-slide-shadow-right,
 .swiper-container-flip .swiper-slide-shadow-right {
   z-index: 0;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 /* Cube */
@@ -1828,7 +1830,6 @@ button.swiper-pagination-bullet {
   height: 100%;
   background: #000;
   opacity: 0.6;
-  -webkit-filter: blur(50px);
   filter: blur(50px);
   z-index: 0;
 }

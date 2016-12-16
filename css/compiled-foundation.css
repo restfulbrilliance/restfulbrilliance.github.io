@@ -3470,7 +3470,8 @@ body {
   width: 100%;
   overflow-x: hidden;
   position: relative;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
   -webkit-overflow-scrolling: auto;
 }
 
@@ -3494,7 +3495,8 @@ body {
   min-height: 100%;
   background: #fefefe;
   transition: transform 0.5s ease;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
   z-index: 1;
   padding-bottom: 0.1px;
   box-shadow: 0 0 10px rgba(10, 10, 10, 0.5);
@@ -4745,7 +4747,8 @@ table.hover tr:nth-of-type(even):hover {
   -ms-transform: translateY(-100%);
       transform: translateY(-100%);
   transition-property: transform, opacity;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 
 .slide-in-down.mui-enter.mui-enter-active {
@@ -4759,7 +4762,8 @@ table.hover tr:nth-of-type(even):hover {
   -ms-transform: translateX(-100%);
       transform: translateX(-100%);
   transition-property: transform, opacity;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 
 .slide-in-left.mui-enter.mui-enter-active {
@@ -4773,7 +4777,8 @@ table.hover tr:nth-of-type(even):hover {
   -ms-transform: translateY(100%);
       transform: translateY(100%);
   transition-property: transform, opacity;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 
 .slide-in-up.mui-enter.mui-enter-active {
@@ -4787,7 +4792,8 @@ table.hover tr:nth-of-type(even):hover {
   -ms-transform: translateX(100%);
       transform: translateX(100%);
   transition-property: transform, opacity;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 
 .slide-in-right.mui-enter.mui-enter-active {
@@ -4801,7 +4807,8 @@ table.hover tr:nth-of-type(even):hover {
   -ms-transform: translateY(0);
       transform: translateY(0);
   transition-property: transform, opacity;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 
 .slide-out-down.mui-leave.mui-leave-active {
@@ -4815,7 +4822,8 @@ table.hover tr:nth-of-type(even):hover {
   -ms-transform: translateX(0);
       transform: translateX(0);
   transition-property: transform, opacity;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 
 .slide-out-right.mui-leave.mui-leave-active {
@@ -4829,7 +4837,8 @@ table.hover tr:nth-of-type(even):hover {
   -ms-transform: translateY(0);
       transform: translateY(0);
   transition-property: transform, opacity;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 
 .slide-out-up.mui-leave.mui-leave-active {
@@ -4843,7 +4852,8 @@ table.hover tr:nth-of-type(even):hover {
   -ms-transform: translateX(0);
       transform: translateX(0);
   transition-property: transform, opacity;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 
 .slide-out-left.mui-leave.mui-leave-active {
