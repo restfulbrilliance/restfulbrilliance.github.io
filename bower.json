@@ -20,5 +20,8 @@
     "test",
     "tests"
   ],
-  "private": true
+  "private": true,
+  "resolutions": {
+    "what-input": "~4.0.3"
+  }
 }
