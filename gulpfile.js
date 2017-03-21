@@ -107,12 +107,53 @@ _gulp.task('jekyll-build', ['sass-compile', 'js-compile'], function (gulpCallBac
     });
 });
 
-_gulp.task('git-add-source', function (gulpCallBack) {
+_gulp.task('git-source-add', function (gulpCallBack) {
 
     var sourceDir = _path.resolve(process.cwd());
     _gulpUtil.log('Source Directory: ' + sourceDir);
+    return gitAdd(sourceDir, gulpCallBack);
+});
 
-    var git = _childProcess.spawn('git', ['add', '.'], { shell: true });
+_gulp.task('git-source-commit', ['git-source-add'], function (gulpCallBack) {
+
+    var sourceDir = _path.resolve(process.cwd());
+    _gulpUtil.log('Source Directory: ' + sourceDir);
+    return gitCommit(sourceDir, gulpCallBack);
+    
+});
+
+_gulp.task('git-source-push', ['git-source-add', 'git-source-commit'], function (gulpCallBack) {
+
+    var sourceDir = _path.resolve(process.cwd());
+    _gulpUtil.log('Source Directory: ' + sourceDir);
+    return gitPush(sourceDir, 'source', gulpCallBack);
+});
+
+_gulp.task('git-add-site', function (gulpCallBack) {
+
+    var siteDir = _path.resolve(process.cwd(), './_site');
+    _gulpUtil.log('Site Directory: ' + siteDir);
+    return gitAdd(siteDir, gulpCallBack);
+});
+
+_gulp.task('git-commit-site', ['git-add-site'], function (gulpCallBack) {
+
+    var siteDir = _path.resolve(process.cwd(), './_site');
+    _gulpUtil.log('Site Directory: ' + siteDir);
+    return gitCommit(siteDir, gulpCallBack);
+
+});
+
+_gulp.task('git-push-site', ['git-add-site', 'git-commit-site'], function (gulpCallBack) {
+
+    var siteDir = _path.resolve(process.cwd(), './_site');
+    _gulpUtil.log('Site Directory: ' + siteDir);
+    gitPush(siteDir, 'master', gulpCallBack);
+});
+
+var gitAdd = function gitAdd(dir, gulpCallBack) {
+
+    var git = _childProcess.spawn('git', ['add', '.'], { shell: true, cwd: dir });
 
     var gitLogger = function (buffer) {
         buffer.toString()
@@ -134,14 +175,11 @@ _gulp.task('git-add-source', function (gulpCallBack) {
             gulpCallBack('Git: [add .] Exited with Error Code = ' + code);
         }
     });
-});
+};
 
-_gulp.task('git-commit-source', ['git-add-source'], function (gulpCallBack) {
+var gitCommit = function (dir, gulpCallback) {
 
-    var sourceDir = _path.resolve(process.cwd());
-    _gulpUtil.log('Source Directory: ' + sourceDir);
-
-    var git = _childProcess.spawn('git', ['commit', '-m', '"bliss source commit"'], { shell: true });
+    var git = _childProcess.spawn('git', ['commit', '-m', 'gulp source commit'], { shell: true, cwd: dir });
 
     var gitLogger = function (buffer) {
         buffer.toString()
@@ -163,14 +201,11 @@ _gulp.task('git-commit-source', ['git-add-source'], function (gulpCallBack) {
             gulpCallBack('Git: [commit] Exited with Error Code = ' + code);
         }
     });
-});
+};
 
-_gulp.task('git-push-source', ['git-add-source', 'git-commit-source'], function (gulpCallBack) {
+var gitPush = function (dir, branch, gulpCallBack) {
 
-    var sourceDir = _path.resolve(process.cwd());
-    _gulpUtil.log('Source Directory: ' + sourceDir);
-
-    var git = _childProcess.spawn('git', ['push', 'origin', 'source'], { shell: true });
+    var git = _childProcess.spawn('git', ['push', 'origin', branch], { shell: true, cwd: dir });
 
     var gitLogger = function (buffer) {
         buffer.toString()
@@ -192,7 +227,7 @@ _gulp.task('git-push-source', ['git-add-source', 'git-commit-source'], function 
             gulpCallBack('Git: [push origin source] Exited with Error Code = ' + code);
         }
     });
-});
+};
 
 _gulp.task('browser-sync-js-reload', ['js-compile'], function () {
     _browserSync.reload();
