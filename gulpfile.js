@@ -2,7 +2,7 @@
 
     Description: Bliss Framwork Master Gulpfile
     Author: Robert Strube
-    Version: 0.1
+    Version: 0.0.1
 
 -------------------------------------------------------------------*/
 
@@ -35,11 +35,10 @@ _gulp.task('sass-compile', function (gulpCallBack) {
       .pipe(_gulpAutoPrefixer({ browsers: ['last 2 versions', 'ie >= 9'] }))
       .pipe(_gulp.dest('_site/css/'))
       .pipe(_browserSync.stream());
-
-    gulpCallBack(null);
 });
 
 _gulp.task('js-compile', function (gulpCallBack) {
+
     return _gulp.src(['bower_components/jquery/dist/jquery.js',
                      'bower_components/what-input/what-input.js',
                      'bower_components/foundation-sites/dist/foundation.js',
@@ -49,8 +48,6 @@ _gulp.task('js-compile', function (gulpCallBack) {
       .pipe(_gulpRename({ suffix: '.min' }))
       .pipe(_gulpUglify())
       .pipe(_gulp.dest('_site/js/'));
-
-    gulpCallBack(null);
 });
 
 _gulp.task('jekyll-clean', function (gulpCallBack) {

@@ -1,23 +1,10 @@
 {
   "name": "bliss-framework",
-  "version": "1.0.0",
-  "description": "Basic template for a new Foundation for Sites project.",
-  "main": "gulpfile.js",
-  "devDependencies": {
-    "gulp": "3.9.1",
-    "gulp-autoprefixer": "3.1.1",
-    "gulp-sass": "3.1.0",
-    "gulp-rename": "1.2.2",
-    "uglify-js": "2.8.14",
-    "gulp-uglify": "2.1.1",
-    "gulp-util": "3.0.8",
-    "browser-sync": "2.18.8",
-    "merge-stream": "1.0.1"
-  },
-  "scripts": {
-    "start": "gulp",
-    "build": "gulp jekyll-build"
-  },
+  "version": "0.0.1",
+  "description": "Bliss Framework, build sites with Jekyll and Foundation",
+  "author": "Robert Strube <rstrube@restfulbrilliance.com>",
+  "license": "MIT",
+  "private": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/restfulbrilliance/bliss-framework.git"
@@ -26,10 +13,22 @@
     "url": "https://github.com/restfulbrilliance/bliss-framework/issues",
     "email": "bliss@restfulbrilliance.com"
   },
-  "author": "Restful Brilliance <bliss@restfulbrilliance.com>",
-  "license": "MIT",
-  "private": true,
   "dependencies": {
     "gulp-autoprefixer": "3.1.1"
+  },
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "gulp-autoprefixer": "3.1.1",
+    "gulp-sass": "3.1.0",
+    "gulp-rename": "1.2.2",
+    "gulp-uglify": "2.1.1",
+    "gulp-util": "3.0.8",
+    "browser-sync": "2.18.8",
+    "merge-stream": "1.0.1"
+  },
+  "main": "gulpfile.js",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp jekyll-build"
   }
 }
