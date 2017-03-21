@@ -26,7 +26,7 @@ var jekyllExec = process.platform === "win32" ? "jekyll.bat" : "jekyll";
 
 _gulp.task('sass-compile', function (gulpCallBack) {
 
-    var sassStream = _gulp.src('_sass/bliss.scss')
+    var sassStream = _gulp.src('_sass/theme.scss')
       .pipe(_gulpSass({ includePaths: _foundationSassPaths, outputStyle: 'expanded' })
       .on('error', _gulpSass.logError));
 
