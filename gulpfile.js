@@ -1,8 +1,8 @@
 /*------------------------------------------------------------------
 
-    Description: Gulpfile for Foundation + Jekyll
+    Description: Bliss Framwork Master Gulpfile
     Author: Robert Strube
-    Version: 1.0
+    Version: 0.1
 
 -------------------------------------------------------------------*/
 
@@ -10,8 +10,6 @@ var _gulp = require('gulp');
 var _gulpSass = require('gulp-sass');
 var _gulpAutoPrefixer = require('gulp-autoprefixer');
 var _gulpRename = require('gulp-rename');
-//var _gulpCleanCss = require('gulp-clean-css');
-//var _gulpConcat = require('gulp-concat');
 var _gulpUglify = require('gulp-uglify');
 var _childProcess = require('child_process');
 var _gulpUtil = require('gulp-util');
@@ -27,7 +25,7 @@ var jekyllExec = process.platform === "win32" ? "jekyll.bat" : "jekyll";
 
 _gulp.task('sass-compile', function (gulpCallBack) {
 
-    var sassStream = _gulp.src('_sass/compiled-foundation.scss')
+    var sassStream = _gulp.src('_sass/bliss.scss')
       .pipe(_gulpSass({ includePaths: _foundationSassPaths, outputStyle: 'expanded' })
       .on('error', _gulpSass.logError));
 
@@ -36,9 +34,6 @@ _gulp.task('sass-compile', function (gulpCallBack) {
     return _mergeStream(sassStream, cssStream)
       .pipe(_gulpAutoPrefixer({ browsers: ['last 2 versions', 'ie >= 9'] }))
       .pipe(_gulp.dest('_site/css/'))
-      //.pipe(_gulpRename({ suffix: '.min' }))
-      //.pipe(_gulpCleanCss())
-      //.pipe(_gulp.dest('_site/css/'))
       .pipe(_browserSync.stream());
 
     gulpCallBack(null);

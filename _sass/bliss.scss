@@ -1,9 +1,23 @@
-﻿@charset 'utf-8';
+﻿/*------------------------------------------------------------------
 
+    Description: Bliss Framwork Master SCSS
+    Version: 0.1
+
+-------------------------------------------------------------------*/
+
+@charset 'utf-8';
+
+//this imports _settings.scss that is in the same directory as this file
 @import 'settings';
+
+//this imports foundation from bower_components
 @import 'foundation';
+
+//this imports motion-ui from bower_copmonents
 @import 'motion-ui';
 
+//Foundation components to enable
+//-------------------------------------------------------------------
 @include foundation-global-styles;
 @include foundation-grid;
 // @include foundation-flex-grid;
@@ -46,5 +60,7 @@
 @include foundation-float-classes;
 // @include foundation-flex-classes;
 
+//Motion-ui components to enable
+//-------------------------------------------------------------------
 @include motion-ui-transitions;
 @include motion-ui-animations;
