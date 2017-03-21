@@ -227,6 +227,7 @@ var gitPush = function (dir, branch, gulpCallBack) {
             gulpCallBack('Git: [push origin source] Exited with Error Code = ' + code);
         }
     });
+
 };
 
 _gulp.task('browser-sync-js-reload', ['js-compile'], function () {
