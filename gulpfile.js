@@ -177,7 +177,7 @@ var gitAdd = function gitAdd(dir, gulpCallBack) {
     });
 };
 
-var gitCommit = function (dir, gulpCallback) {
+var gitCommit = function (dir, gulpCallBack) {
 
     var git = _childProcess.spawn('git', ['commit', '-m', 'gulp source commit'], { shell: true, cwd: dir });
 
