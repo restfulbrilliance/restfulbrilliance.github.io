@@ -107,21 +107,6 @@ _gulp.task('jekyll-build', ['sass-compile', 'js-compile'], function (gulpCallBac
     });
 });
 
-_gulp.task('git-source-add', function (gulpCallBack) {
-
-    var sourceDir = _path.resolve(process.cwd());
-    _gulpUtil.log('Source Directory: ' + sourceDir);
-    return gitAdd(sourceDir, gulpCallBack);
-});
-
-_gulp.task('git-source-commit', ['git-source-add'], function (gulpCallBack) {
-
-    var sourceDir = _path.resolve(process.cwd());
-    _gulpUtil.log('Source Directory: ' + sourceDir);
-    return gitCommit(sourceDir, gulpCallBack);
-    
-});
-
 _gulp.task('git-source-push', function (gulpCallBack) {
 
     var sourceDir = _path.resolve(process.cwd());
@@ -144,7 +129,7 @@ _gulp.task('git-site-commit', ['git-site-add'], function (gulpCallBack) {
 
 });
 
-_gulp.task('git-site-push', ['jekyll-build'], function (gulpCallBack) {
+_gulp.task('git-site-push', ['git-site-commit'], function (gulpCallBack) {
 
     var siteDir = _path.resolve(process.cwd(), './_site');
     _gulpUtil.log('Site Directory: ' + siteDir);
