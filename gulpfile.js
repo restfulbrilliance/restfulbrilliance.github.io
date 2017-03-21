@@ -155,12 +155,41 @@ _gulp.task('git-commit-source', ['git-add-source'], function (gulpCallBack) {
     git.on('exit', function (code) {
 
         if (code === 0) {
-            _gulpUtil.log('Git: [add .] Exited Successfully');
+            _gulpUtil.log('Git: [commit] Exited Successfully');
             gulpCallBack(null);
         }
 
         else {
-            gulpCallBack('Git: [add .] Exited with Error Code = ' + code);
+            gulpCallBack('Git: [commit] Exited with Error Code = ' + code);
+        }
+    });
+});
+
+_gulp.task('git-push-source', ['git-add-source', 'git-commit-source'], function (gulpCallBack) {
+
+    var sourceDir = _path.resolve(process.cwd());
+    _gulpUtil.log('Source Directory: ' + sourceDir);
+
+    var git = _childProcess.spawn('git', ['push', 'origin', 'source'], { shell: true });
+
+    var gitLogger = function (buffer) {
+        buffer.toString()
+            .split(/\n/)
+            .forEach((message) => _gulpUtil.log('Git: ' + message));
+    };
+
+    git.stdout.on('data', gitLogger);
+    git.stderr.on('data', gitLogger);
+
+    git.on('exit', function (code) {
+
+        if (code === 0) {
+            _gulpUtil.log('Git: [push origin source] Exited Successfully');
+            gulpCallBack(null);
+        }
+
+        else {
+            gulpCallBack('Git: [push origin source] Exited with Error Code = ' + code);
         }
     });
 });
