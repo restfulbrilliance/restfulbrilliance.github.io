@@ -24,7 +24,8 @@
     "gulp-uglify": "2.1.1",
     "gulp-util": "3.0.8",
     "browser-sync": "2.18.8",
-    "merge-stream": "1.0.1"
+    "merge-stream": "1.0.1",
+    "path": "0.12.7"
   },
   "main": "gulpfile.js",
   "scripts": {

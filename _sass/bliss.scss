@@ -13,6 +13,9 @@
 //this imports foundation from bower_components
 @import 'foundation';
 
+//this imports _theme.scss that is in the same directory as this file
+@import 'theme';
+
 //this imports motion-ui from bower_copmonents
 @import 'motion-ui';
 

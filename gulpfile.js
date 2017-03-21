@@ -15,6 +15,7 @@ var _childProcess = require('child_process');
 var _gulpUtil = require('gulp-util');
 var _browserSync = require('browser-sync').create();
 var _mergeStream = require('merge-stream');
+var _path = require('path'); 
 
 var _foundationSassPaths = [
   'bower_components/foundation-sites/scss',
@@ -78,7 +79,10 @@ _gulp.task('jekyll-clean', function (gulpCallBack) {
 
 _gulp.task('jekyll-build', ['sass-compile', 'js-compile'], function (gulpCallBack) {
 
-    var jekyll = _childProcess.spawn(jekyllExec, ['build']);
+    var sourceDir = _path.resolve(process.cwd());
+    _gulpUtil.log('Source Directory: ' + sourceDir);
+
+    var jekyll = _childProcess.spawn(jekyllExec, ['build'], { shell: true } );
 
     var jekyllLogger = function (buffer) {
         buffer.toString()
@@ -99,6 +103,64 @@ _gulp.task('jekyll-build', ['sass-compile', 'js-compile'], function (gulpCallBac
         else
         {
             gulpCallBack('Jekyll: [build] Exited with Error Code = ' + code);
+        }
+    });
+});
+
+_gulp.task('git-add-source', function (gulpCallBack) {
+
+    var sourceDir = _path.resolve(process.cwd());
+    _gulpUtil.log('Source Directory: ' + sourceDir);
+
+    var git = _childProcess.spawn('git', ['add', '.'], { shell: true });
+
+    var gitLogger = function (buffer) {
+        buffer.toString()
+            .split(/\n/)
+            .forEach((message) => _gulpUtil.log('Git: ' + message));
+    };
+
+    git.stdout.on('data', gitLogger);
+    git.stderr.on('data', gitLogger);
+
+    git.on('exit', function (code) {
+
+        if (code === 0) {
+            _gulpUtil.log('Git: [add .] Exited Successfully');
+            gulpCallBack(null);
+        }
+
+        else {
+            gulpCallBack('Git: [add .] Exited with Error Code = ' + code);
+        }
+    });
+});
+
+_gulp.task('git-commit-source', ['git-add-source'], function (gulpCallBack) {
+
+    var sourceDir = _path.resolve(process.cwd());
+    _gulpUtil.log('Source Directory: ' + sourceDir);
+
+    var git = _childProcess.spawn('git', ['commit', '-m', '"bliss source commit"'], { shell: true });
+
+    var gitLogger = function (buffer) {
+        buffer.toString()
+            .split(/\n/)
+            .forEach((message) => _gulpUtil.log('Git: ' + message));
+    };
+
+    git.stdout.on('data', gitLogger);
+    git.stderr.on('data', gitLogger);
+
+    git.on('exit', function (code) {
+
+        if (code === 0) {
+            _gulpUtil.log('Git: [add .] Exited Successfully');
+            gulpCallBack(null);
+        }
+
+        else {
+            gulpCallBack('Git: [add .] Exited with Error Code = ' + code);
         }
     });
 });
