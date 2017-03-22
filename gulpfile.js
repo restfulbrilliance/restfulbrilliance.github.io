@@ -15,19 +15,23 @@ var _childProcess = require('child_process');
 var _gulpUtil = require('gulp-util');
 var _browserSync = require('browser-sync').create();
 var _mergeStream = require('merge-stream');
-var _path = require('path'); 
+var _path = require('path');
+var _runSequence = require('run-sequence');
 
-var _foundationSassPaths = [
+var _bowerSassPaths = [
   'bower_components/foundation-sites/scss',
   'bower_components/motion-ui/src'
 ];
 
-var jekyllExec = process.platform === "win32" ? "jekyll.bat" : "jekyll";
+var _jekyllExec = process.platform === "win32" ? "jekyll.bat" : "jekyll";
+var _jekyllBuildInProgress = false;
 
-_gulp.task('sass-compile', function (gulpCallBack) {
+//build tasks
+//-----------------------------------------------
+_gulp.task('sass-build', function () {
 
     var sassStream = _gulp.src('_sass/theme.scss')
-      .pipe(_gulpSass({ includePaths: _foundationSassPaths, outputStyle: 'expanded' })
+      .pipe(_gulpSass({ includePaths: _bowerSassPaths, outputStyle: 'expanded' })
       .on('error', _gulpSass.logError));
 
     var cssStream = _gulp.src(['css/**/*.css']);
@@ -38,7 +42,7 @@ _gulp.task('sass-compile', function (gulpCallBack) {
       .pipe(_browserSync.stream());
 });
 
-_gulp.task('js-compile', function (gulpCallBack) {
+_gulp.task('js-build', function () {
 
     return _gulp.src(['bower_components/jquery/dist/jquery.js',
                      'bower_components/what-input/what-input.js',
@@ -51,14 +55,19 @@ _gulp.task('js-compile', function (gulpCallBack) {
       .pipe(_gulp.dest('_site/js/'));
 });
 
-_gulp.task('jekyll-clean', function (gulpCallBack) {
+_gulp.task('jekyll-build', ['sass-build', 'js-build'], function (done) {
 
-    var jekyll = _childProcess.spawn(jekyllExec, ['clean']);
+    _jekyllBuildInProgress = true;
 
-    var jekyllLogger = (buffer) => {
+    var sourceDir = _path.resolve(process.cwd());
+    _gulpUtil.log('Jekyll: Source Directory = ' + sourceDir);
+
+    var jekyll = _childProcess.spawn(jekyllExec, ['build'], { shell: true });
+
+    var jekyllLogger = function (buffer) {
         buffer.toString()
-          .split(/\n/)
-          .forEach((message) => _gulpUtil.log('Jekyll: ' + message));
+            .split(/\n/)
+            .forEach((message) => _gulpUtil.log('Jekyll: ' + message));
     };
 
     jekyll.stdout.on('data', jekyllLogger);
@@ -67,76 +76,42 @@ _gulp.task('jekyll-clean', function (gulpCallBack) {
     jekyll.on('exit', function (code) {
 
         if (code === 0) {
-            _gulpUtil.log('Jekyll: [clean] Exited Successfully');
-            gulpCallBack(null);
+            _gulpUtil.log('Jekyll: [build] Exited Successfully');
+            _jekyllBuildInProgress = false;
+            done();
         }
 
         else {
-            gulpCallBack('Jekyll: [clean] Exited with Error Code = ' + code);
+            _jekyllBuildInProgress = false;
+            done('Jekyll: [build] Exited with Error Code = ' + code);
         }
     });
 });
 
-_gulp.task('jekyll-build', ['sass-compile', 'js-compile'], function (gulpCallBack) {
+//git tasks and functions
+//-----------------------------------------------------------------------------------------------
+_gulp.task('push', ['jekyll-build'], function (done) {
 
-    var sourceDir = _path.resolve(process.cwd());
-    _gulpUtil.log('Source Directory: ' + sourceDir);
-
-    var jekyll = _childProcess.spawn(jekyllExec, ['build'], { shell: true } );
-
-    var jekyllLogger = function (buffer) {
-        buffer.toString()
-          .split(/\n/)
-          .forEach((message) => _gulpUtil.log('Jekyll: ' + message));
-    };
-
-    jekyll.stdout.on('data', jekyllLogger);
-    jekyll.stderr.on('data', jekyllLogger);
-
-    jekyll.on('exit', function (code) {
-
-        if (code === 0){
-            _gulpUtil.log('Jekyll: [build] Exited Successfully');
-            gulpCallBack(null);
-        }
-
-        else
-        {
-            gulpCallBack('Jekyll: [build] Exited with Error Code = ' + code);
-        }
-    });
-});
-
-_gulp.task('git-source-push', function (gulpCallBack) {
-
-    var sourceDir = _path.resolve(process.cwd());
-    _gulpUtil.log('Source Directory: ' + sourceDir);
-    return gitPush(sourceDir, 'source', gulpCallBack);
-});
-
-_gulp.task('git-site-add', ['jekyll-build'], function (gulpCallBack) {
+    if (_browserSync.active)
+        _browserSync.exit();
 
     var siteDir = _path.resolve(process.cwd(), './_site');
-    _gulpUtil.log('Site Directory: ' + siteDir);
-    return gitAdd(siteDir, gulpCallBack);
+    gitAdd(siteDir);
+    gitCommit(siteDir);
+    gitPush(siteDir, 'master', done);
 });
 
-_gulp.task('git-site-commit', ['git-site-add'], function (gulpCallBack) {
+_gulp.task('push-source', function (done) {
 
-    var siteDir = _path.resolve(process.cwd(), './_site');
-    _gulpUtil.log('Site Directory: ' + siteDir);
-    return gitCommit(siteDir, gulpCallBack);
-
+    var sourceDir = process.cwd();
+    gitAdd(sourceDir);
+    gitCommit(sourceDir);
+    gitPush(sourceDir, 'source', done);
 });
 
-_gulp.task('git-site-push', ['git-site-commit'], function (gulpCallBack) {
+var gitAdd = function gitAdd(dir) {
 
-    var siteDir = _path.resolve(process.cwd(), './_site');
-    _gulpUtil.log('Site Directory: ' + siteDir);
-    gitPush(siteDir, 'master', gulpCallBack);
-});
-
-var gitAdd = function gitAdd(dir, gulpCallBack) {
+    _gulpUtil.log('Git: [add .] in ' + dir);
 
     var git = _childProcess.spawn('git', ['add', '.'], { shell: true, cwd: dir });
 
@@ -151,19 +126,18 @@ var gitAdd = function gitAdd(dir, gulpCallBack) {
 
     git.on('exit', function (code) {
 
-        if (code === 0) {
+        if (code === 0)
             _gulpUtil.log('Git: [add .] Exited Successfully');
-            gulpCallBack(null);
-        }
 
-        else {
-            gulpCallBack('Git: [add .] Exited with Error Code = ' + code);
-        }
+        else
+            _gulpUtil.log('Git: [add .] Exited with Error Code = ' + code);
     });
 };
 
-var gitCommit = function (dir, gulpCallBack) {
+var gitCommit = function (dir) {
 
+    _gulpUtil.log('Git: [commit] in ' + dir);
+    
     var git = _childProcess.spawn('git', ['commit', '-m', 'gulp source commit'], { shell: true, cwd: dir });
 
     var gitLogger = function (buffer) {
@@ -177,18 +151,17 @@ var gitCommit = function (dir, gulpCallBack) {
 
     git.on('exit', function (code) {
 
-        if (code === 0) {
+        if (code === 0)
             _gulpUtil.log('Git: [commit] Exited Successfully');
-            gulpCallBack(null);
-        }
-
-        else {
-            gulpCallBack('Git: [commit] Exited with Error Code = ' + code);
-        }
+        
+        else
+            done('Git: [commit] Exited with Error Code = ' + code);
     });
 };
 
-var gitPush = function (dir, branch, gulpCallBack) {
+var gitPush = function (dir, branch) {
+
+    _gulpUtil.log('Git: [push origin ' + branch + '] in ' + dir);
 
     var git = _childProcess.spawn('git', ['push', 'origin', branch], { shell: true, cwd: dir });
 
@@ -203,26 +176,42 @@ var gitPush = function (dir, branch, gulpCallBack) {
 
     git.on('exit', function (code) {
 
-        if (code === 0) {
+        if (code === 0)
             _gulpUtil.log('Git: [push origin source] Exited Successfully');
-            gulpCallBack(null);
-        }
 
-        else {
-            gulpCallBack('Git: [push origin source] Exited with Error Code = ' + code);
-        }
+        else
+            done('Git: [push origin source] Exited with Error Code = ' + code);
     });
 };
 
-_gulp.task('browser-sync-js-reload', ['js-compile'], function () {
-    _browserSync.reload();
+//change tasks
+//-----------------------------------------------------------------------------------------------
+
+_gulp.task('sass-change', function (done) {
+
+    if (!_jekyllBuildInProgress) {
+        _gulp.start('sass-build');
+    }
 });
 
-_gulp.task('browser-sync-html-reload', ['jekyll-build'], function () {
-    _browserSync.reload();
+_gulp.task('js-change', function (done) {
+
+    if (!_jekyllBuildInProgress) {
+        _runSequence('js-build', 'reload');
+    }
 });
 
-_gulp.task('browser-sync-serve', ['jekyll-build'], function () {
+_gulp.task('jekyll-change', function (done) {
+
+    if (!_jekyllBuildInProgress) {
+        _runSequence('jekyll-build', 'reload');
+    }
+});
+
+//browsersync tasks
+//-----------------------------------------------------------------------------------------------
+
+_gulp.task('serve', ['jekyll-build'], function (done) {
 
     _browserSync.init({
         server: {
@@ -230,14 +219,26 @@ _gulp.task('browser-sync-serve', ['jekyll-build'], function () {
         }
     });
 
-    _gulp.watch(['**/*.html',
-                '**/*.md',
-                '**/*.markdown',
-                'img/**/*.*'], ['browser-sync-html-reload']);
-    _gulp.watch(['_sass/**/*.scss',
-                'css/**/*.css'], ['sass-compile']);
-    _gulp.watch(['js/**/*.js'], ['browser-sync-js-reload']);
+    _gulp.watch(['**/*.html', '**/*.md', '**/*.markdown', 'img/**/*.*'], ['jekyll-change']);
+    _gulp.watch(['_sass/**/*.scss', 'css/**/*.css'], ['sass-change']);
+    _gulp.watch(['js/**/*.js'], ['js-change']);
+
+    done();
 });
 
-_gulp.task('default', ['browser-sync-serve'], function () {
+_gulp.task('exit', function (done) {
+
+    _browserSync.exit();
+    done();
 });
+
+_gulp.task('reload', function (done) {
+
+    _browserSync.reload();
+    done();
+});
+
+//default task
+//-----------------------------------------------------------------------------------------------
+
+_gulp.task('default', ['serve'], function () { });
