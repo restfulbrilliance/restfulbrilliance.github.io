@@ -62,7 +62,7 @@ _gulp.task('jekyll-build', ['sass-build', 'js-build'], function (done) {
     var sourceDir = _path.resolve(process.cwd());
     _gulpUtil.log('Jekyll: Source Directory = ' + sourceDir);
 
-    var jekyll = _childProcess.spawn(jekyllExec, ['build'], { shell: true });
+    var jekyll = _childProcess.spawn(_jekyllExec, ['build'], { shell: true });
 
     var jekyllLogger = function (buffer) {
         buffer.toString()
@@ -90,23 +90,46 @@ _gulp.task('jekyll-build', ['sass-build', 'js-build'], function (done) {
 
 //git tasks and functions
 //-----------------------------------------------------------------------------------------------
-_gulp.task('push', ['jekyll-build'], function (done) {
+_gulp.task('git-add', ['jekyll-build'], function (done) {
 
     if (_browserSync.active)
         _browserSync.exit();
 
     var siteDir = _path.resolve(process.cwd(), './_site');
     gitAdd(siteDir);
-    gitCommit(siteDir);
-    gitPush(siteDir, 'master', done);
+    done();
 });
 
-_gulp.task('push-source', function (done) {
+_gulp.task('git-commit', ['git-add'], function (done) {
 
-    var sourceDir = process.cwd();
-    gitAdd(sourceDir);
-    gitCommit(sourceDir);
-    gitPush(sourceDir, 'source', done);
+    var siteDir = _path.resolve(process.cwd(), './_site');
+    gitCommit(siteDir);
+    done();
+});
+
+_gulp.task('git-push', ['git-commit'], function (done) {
+
+    var siteDir = _path.resolve(process.cwd(), './_site');
+    gitPush(siteDir, 'master');
+    done();
+});
+
+_gulp.task('git-add-source', function (done) {
+
+    gitAdd(process.cwd());
+    done();
+});
+
+_gulp.task('git-commit-source', ['git-add-source'], function (done) {
+
+    gitCommit(process.cwd());
+    done();
+});
+
+_gulp.task('git-push-source', ['git-commit-source'], function (done) {
+
+    gitPush(process.cwd(), 'source');
+    done();
 });
 
 var gitAdd = function gitAdd(dir) {
