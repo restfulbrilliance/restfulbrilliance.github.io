@@ -96,43 +96,34 @@ _gulp.task('git-add', ['jekyll-build'], function (done) {
         _browserSync.exit();
 
     var siteDir = _path.resolve(process.cwd(), './_site');
-    gitAdd(siteDir);
-    done();
+    gitAdd(siteDir, done);
 });
 
 _gulp.task('git-commit', ['git-add'], function (done) {
 
     var siteDir = _path.resolve(process.cwd(), './_site');
-    gitCommit(siteDir);
-    done();
+    gitCommit(siteDir, done);
 });
 
 _gulp.task('git-push', ['git-commit'], function (done) {
 
     var siteDir = _path.resolve(process.cwd(), './_site');
-    gitPush(siteDir, 'master');
-    done();
+    gitPush(siteDir, 'master', done);
 });
 
 _gulp.task('git-add-source', function (done) {
-
-    gitAdd(process.cwd());
-    done();
+    gitAdd(process.cwd(), done);
 });
 
 _gulp.task('git-commit-source', ['git-add-source'], function (done) {
-
-    gitCommit(process.cwd());
-    done();
+    gitCommit(process.cwd(), done);
 });
 
 _gulp.task('git-push-source', ['git-commit-source'], function (done) {
-
-    gitPush(process.cwd(), 'source');
-    done();
+    gitPush(process.cwd(), 'source', done);
 });
 
-var gitAdd = function gitAdd(dir) {
+var gitAdd = function gitAdd(dir, done) {
 
     _gulpUtil.log('Git: [add .] in ' + dir);
 
@@ -149,15 +140,17 @@ var gitAdd = function gitAdd(dir) {
 
     git.on('exit', function (code) {
 
-        if (code === 0)
+        if (code === 0) {
             _gulpUtil.log('Git: [add .] Exited Successfully');
+            done();
+        }
 
         else
-            _gulpUtil.log('Git: [add .] Exited with Error Code = ' + code);
+           done('Git: [add .] Exited with Error Code = ' + code);
     });
 };
 
-var gitCommit = function (dir) {
+var gitCommit = function (dir, done) {
 
     _gulpUtil.log('Git: [commit] in ' + dir);
     
@@ -174,15 +167,17 @@ var gitCommit = function (dir) {
 
     git.on('exit', function (code) {
 
-        if (code === 0)
+        if (code === 0) {
             _gulpUtil.log('Git: [commit] Exited Successfully');
+            done();
+        }
         
         else
             done('Git: [commit] Exited with Error Code = ' + code);
     });
 };
 
-var gitPush = function (dir, branch) {
+var gitPush = function (dir, branch, done) {
 
     _gulpUtil.log('Git: [push origin ' + branch + '] in ' + dir);
 
@@ -199,8 +194,10 @@ var gitPush = function (dir, branch) {
 
     git.on('exit', function (code) {
 
-        if (code === 0)
+        if (code === 0) {
             _gulpUtil.log('Git: [push origin source] Exited Successfully');
+            done();
+        }
 
         else
             done('Git: [push origin source] Exited with Error Code = ' + code);
