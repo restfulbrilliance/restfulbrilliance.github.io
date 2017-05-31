@@ -26,7 +26,8 @@
     "browser-sync": "^2.18.12",
     "merge-stream": "^1.0.1",
     "path": "^0.12.7",
-    "run-sequence": "^1.2.2"
+    "run-sequence": "^1.2.2",
+    "del": "^2.2.2"
   },
   "main": "gulpfile.js",
   "scripts": {

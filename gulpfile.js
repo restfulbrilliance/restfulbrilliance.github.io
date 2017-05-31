@@ -17,6 +17,7 @@ var _browserSync = require('browser-sync').create();
 var _mergeStream = require('merge-stream');
 var _path = require('path');
 var _runSequence = require('run-sequence');
+var del = require('del');
 
 var _bowerSassPaths = [
   'bower_components/foundation-sites/scss',
@@ -26,9 +27,15 @@ var _bowerSassPaths = [
 var _jekyllExec = process.platform === "win32" ? "jekyll.bat" : "jekyll";
 var _jekyllBuildInProgress = false;
 
-//build tasks
-//-----------------------------------------------
-_gulp.task('sass-build', function () {
+/*------------------------------------------------------------------
+    Task: sass-build
+    Depends: clean
+    Desription: generates ./_site/css/theme.css from
+        ./_sass/theme.scss also copies all .css files from ./css/ to
+        ./site/css. This allows developers to include static css into
+        their generated site
+-------------------------------------------------------------------*/
+_gulp.task('sass-build', ['clean'], function () {
 
     var sassStream = _gulp.src('_sass/theme.scss')
       .pipe(_gulpSass({ includePaths: _bowerSassPaths, outputStyle: 'expanded' })
@@ -42,7 +49,15 @@ _gulp.task('sass-build', function () {
       .pipe(_browserSync.stream());
 });
 
-_gulp.task('js-build', function () {
+/*------------------------------------------------------------------
+    Task: js-build
+    Depends: clean
+    Desription: generates minified js files from Bower js files and
+        any additional js files that are in ./js/ This allows
+        developers to include additional non-Bower js into their
+        generated site
+-------------------------------------------------------------------*/
+_gulp.task('js-build', ['clean'], function () {
 
     return _gulp.src(['bower_components/jquery/dist/jquery.js',
                      'bower_components/what-input/what-input.js',
@@ -55,6 +70,13 @@ _gulp.task('js-build', function () {
       .pipe(_gulp.dest('_site/js/'));
 });
 
+/*------------------------------------------------------------------
+    Task: jekyll-build
+    Depends: sass-build, js-build
+    Desription: runs the Jekyll build process which parses all
+        markdown and generates static HTML in ./_site
+        Please note that Jekyll is not used to generate css and js
+-------------------------------------------------------------------*/
 _gulp.task('jekyll-build', ['sass-build', 'js-build'], function (done) {
 
     _jekyllBuildInProgress = true;
@@ -86,6 +108,23 @@ _gulp.task('jekyll-build', ['sass-build', 'js-build'], function (done) {
             done('Jekyll: [build] Exited with Error Code = ' + code);
         }
     });
+});
+
+/*------------------------------------------------------------------
+    Task: clean
+    Depends: none
+    Desription: removes all generated files from ./site except the
+        .git directory
+-------------------------------------------------------------------*/
+_gulp.task('clean', function (done) {
+
+  _gulpUtil.log('Clean: removing all files in ./_site except the .git directory');
+
+  return del([
+    '_site/**/*',
+    // we don't want to clean the .git directory though so we negate the pattern
+    '!site/.git'
+  ]);
 });
 
 //git tasks and functions
