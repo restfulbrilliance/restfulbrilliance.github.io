@@ -6,9 +6,575 @@
 </description>
     <link>http://restfulbrilliance.com/</link>
     <atom:link href="http://restfulbrilliance.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 31 May 2017 23:07:06 -0400</pubDate>
-    <lastBuildDate>Wed, 31 May 2017 23:07:06 -0400</lastBuildDate>
+    <pubDate>Thu, 01 Jun 2017 14:40:21 -0400</pubDate>
+    <lastBuildDate>Thu, 01 Jun 2017 14:40:21 -0400</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Git 101 (Tutorial)</title>
+        <description>&lt;p&gt;This document provides an overview of git and its most useful commands.  Git can appear daunting to beginners, and many people prefer to use GUIs to handle their git interactions.  These tools and GUIs can be helpful for beginners, but you’ll find git more useful and powerful once you understand the underlying commands.&lt;/p&gt;
+
+&lt;p&gt;Learning git via the command line is actually much simpler than most people believe.  Hopefully this post will help you on your journey to becoming a git commandline guru!&lt;/p&gt;
+
+&lt;h2 id=&quot;repository-creation&quot;&gt;Repository Creation&lt;/h2&gt;
+
+&lt;p&gt;There are two main ways to create new git repositories:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;New local repository on the file system.&lt;/li&gt;
+  &lt;li&gt;Cloning an existing remote repository which is hosted elsewhere (e.g. Github).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;creating-a-local-repository-on-your-filesystem&quot;&gt;Creating a Local Repository (on your filesystem)&lt;/h3&gt;
+
+&lt;p&gt;Even if you are only planning on building software locally, it’s a great idea to use git.  This will let you keep track of your changes, roll-back if neccessary, and manage your code across branches.&lt;/p&gt;
+
+&lt;p&gt;To create a local git repository, simply go to the directory that will become your repository and initialize it.  Don’t worry about initializing a new git repository in a directory that already contains files, it won’t modify any existing files.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd ~/projects/my-repo
+git init
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now you can continue to create / modify source code in that directory.  A best practice is to get your initial commit in place as quickly as possible.  When you’re ready, you’ll want to &lt;strong&gt;stage&lt;/strong&gt; your source code for the initial commit.  To stage file(s) for a commit use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git add&lt;/code&gt; command.  You can stage an individual file or directory, or stage all files and directories from your current working directory.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;To stage a single file use: &lt;code class=&quot;highlighter-rouge&quot;&gt;git add {filename}'&lt;/code&gt;. Example: &lt;code class=&quot;highlighter-rouge&quot;&gt;git add my-file.html&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;To stage a directory and all files inside that directory use: &lt;code class=&quot;highlighter-rouge&quot;&gt;git add {dir}&lt;/code&gt;. Example: &lt;code class=&quot;highlighter-rouge&quot;&gt;git add ./my-directory&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;To stage all files and directories that are inside your current working directory use: &lt;code class=&quot;highlighter-rouge&quot;&gt;git add .&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In pracite the &lt;code class=&quot;highlighter-rouge&quot;&gt;git add .&lt;/code&gt; command is the most commonly used.  It’s intelligent enough to only stage files that have changed since the last commit, and it won’t stage a file more than once.  If you haven’t made an initial commit, this means that all files (with some exceptions like the &lt;code class=&quot;highlighter-rouge&quot;&gt;.git&lt;/code&gt; directory) will be staged.&lt;/p&gt;
+
+&lt;p&gt;Here’s where many people get confused.  Staging files does not create a commit into the local repository.  Instead it’s getting files ready for a commit.  This allows you to pick and choose what files will be included within the commit.  Go ahead and stage all the files in your local repository.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You can check the files that are staged for a commit by using the &lt;code class=&quot;highlighter-rouge&quot;&gt;git status&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git status
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;When you’re ready, commit the files that are staged using the &lt;code class=&quot;highlighter-rouge&quot;&gt;git commit&lt;/code&gt; command.  It’s a good pratice to add a message for the commit by using the &lt;code class=&quot;highlighter-rouge&quot;&gt;-m&lt;/code&gt; flag.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit -m &quot;my first commit, like a boss yo!&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You might be wondering what the point of staging files is?  It’s useful if you want to break up your changes into two or more commits.  For example, let’s say you haven’t committed in a while, and you’ve made lots of changes.  You would have preferred to manke more granual commits, but it’s too late for that.  With git it’s no problem.  You just stage the files you want in your first commit, then commit.  Then stage the next set of files for your second commit, then commit, etc.&lt;/p&gt;
+
+&lt;p&gt;Now you know the basics of staging and commit files to a local repository.&lt;/p&gt;
+
+&lt;h3 id=&quot;cloning-an-existing-repository-from-a-remote-system-eg-github&quot;&gt;Cloning an Existing Repository from a Remote System (e.g. Github)&lt;/h3&gt;
+
+&lt;p&gt;If you’ve already created a repository somewhere else (e.g. Github) or you’re jumping on to work with somebody else that already has a repository setup, you’ll need to clone a repository.&lt;/p&gt;
+
+&lt;p&gt;The default branch for repositories is called &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt;.  Unless your team tells you otherwise, you should clone this branch to get started.&lt;/p&gt;
+
+&lt;p&gt;To clone a repository’s &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git clone&lt;/code&gt; command.  Make sure you’re located in the directory in which you want to build a new directory for the repository.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone {url to remote repository}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;For example if you’re in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/projects&lt;/code&gt; and run:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/rstrube/myproject.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Git will clone the repository to: &lt;code class=&quot;highlighter-rouge&quot;&gt;~/projects/myproject.git&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can also add an additional parameter which determines which directory the repository should be cloned into.&lt;/p&gt;
+
+&lt;p&gt;For example if you’re in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/projects&lt;/code&gt; and run:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/rstrube/myproject.git super_duper_special_dir
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Git will clone the repository to &lt;code class=&quot;highlighter-rouge&quot;&gt;~/projects/super_duper_special_dir&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To clone a specific branch of a repository use the &lt;code class=&quot;highlighter-rouge&quot;&gt;-b {branch}&lt;/code&gt; flag.&lt;/p&gt;
+
+&lt;p&gt;For example if you’re in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/projects&lt;/code&gt; and run:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone -b prototype https://github.com/rstrube/rstrube.github.io myproj_prototype
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Git will clone the &lt;code class=&quot;highlighter-rouge&quot;&gt;prototype&lt;/code&gt; branch to &lt;code class=&quot;highlighter-rouge&quot;&gt;~/projects/myproj_prototype&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-the-status-of-your-changes&quot;&gt;Getting the Status of your Changes&lt;/h2&gt;
+
+&lt;p&gt;As we mentioned earlier, the &lt;code class=&quot;highlighter-rouge&quot;&gt;git status&lt;/code&gt; can be used to get the statuses of the files in your local repository.  To elaborate, files can exist in one of several categories:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Staged&lt;/strong&gt; - these are files that will be included in the next commit to your local repository.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Unstaged&lt;/strong&gt; - these are files that will not be included in the next commit.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Untracked&lt;/strong&gt; - these are files that are ignored and will not be included in the next commit.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Committed&lt;/strong&gt; - these are files that have been committed to the local repository, but still need to be pushed to the remote repository(ies).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;To view all of your changes you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;status&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git status
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You’ll see something like:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# On branch master
+# Changes to be committed:
+# (use &quot;git reset HEAD ...&quot; to unstage)
+#
+#modified: ModifiedClass.cs
+#
+# Changes not staged for commit:
+# (use &quot;git add ...&quot; to update what will be committed)
+# (use &quot;git checkout -- ...&quot; to discard changes in working directory)
+#
+#modified: NewClass.cs
+#
+# Untracked files:
+# (use &quot;git add ...&quot; to include in what will be committed)
+#
+#Untracked.config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;staging-files&quot;&gt;Staging Files&lt;/h2&gt;
+
+&lt;p&gt;We talked about staging files eariler, but let’s go into more detail.&lt;/p&gt;
+
+&lt;p&gt;To &lt;strong&gt;stage&lt;/strong&gt; files, you must use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git add&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add {directory}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Will stage all modified files in the specified directory and all sub-directories within that directory.&lt;/p&gt;
+
+&lt;p&gt;Therefore&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Will stage all modified files in the current working directory and sub-directories of the current working directory.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add {filename}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Will stage a specific file.  This can also be important when staging a brand new file.&lt;/p&gt;
+
+&lt;p&gt;As mentioned eariler, it’s common to break up lots of changes across several commits.  To do this, stage the specific files you wish to to include in the first commit, then commit.  Then repeat the process with the files to be included in the second commit, and so on.&lt;/p&gt;
+
+&lt;h2 id=&quot;committing-files&quot;&gt;Committing Files&lt;/h2&gt;
+
+&lt;p&gt;We talked about committing files eariler, but let’s go into more detail.&lt;/p&gt;
+
+&lt;p&gt;It’s important to remember that committing really means committing to your local repository.  To push your changes to your remote repository (e.g. Github) you need to execute a &lt;code class=&quot;highlighter-rouge&quot;&gt;push&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To commit all staged files to your local git repository use:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This will open up a text editor and ask you for a commit message.&lt;/p&gt;
+
+&lt;p&gt;Sometimes it’s easier just to provide the message directly as part of the commit command.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit -m &quot;super duper awesome commit!&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;working-with-remote-repositories&quot;&gt;Working with Remote Repositories&lt;/h2&gt;
+
+&lt;p&gt;One of the most important aspects to using git as a source control system is that you utilize a remote repository to store your code.  Although technically you can get by with using only a local repository, if you were to have problems with your local machine, your code would be gone.  Using a service like Github ensures that you can backup your code without the danger of losing anything.&lt;/p&gt;
+
+&lt;p&gt;In order to associate your local repository with a remote repository, you need to create at least one &lt;strong&gt;remote&lt;/strong&gt;.  Think of remotes as a simple way of creating an alias or a bookmark to a URL which points to a remote repository.&lt;/p&gt;
+
+&lt;p&gt;To begin with, you can always list out all existing remotes for a repository by using:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote -v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You can easily add a remote to an existing local repository using the &lt;code class=&quot;highlighter-rouge&quot;&gt;git remote add&lt;/code&gt; command.  Every remote requires a unique name.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote add myremote https://github.com/rstrube/rstrube.github.io
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Note: the default remote when using Github is called &lt;code class=&quot;highlighter-rouge&quot;&gt;origin&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To remove a remote you can use:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote remove myremote
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To rename a remote you can use:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote rename {old name} {new name}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;pulling-and-pushing&quot;&gt;Pulling and Pushing&lt;/h2&gt;
+
+&lt;p&gt;Pulling and pushing allows you to download commits and upload local commits to and from the remote repository.&lt;/p&gt;
+
+&lt;p&gt;The command to push all local commits to a remote repository is:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git push {remote name} {branch}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If for some reason your local repository’s branch is different than that branch name in the remote repository you want to push to, you can slightly modify the push command&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git push {remote name} {local branch}:{remote branch}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Example: if we are working on the &lt;code class=&quot;highlighter-rouge&quot;&gt;stable&lt;/code&gt; branch in our local repository but we want to push it to the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch of the remote repository we would use:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git push {remote name} stable:master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The command to pull changes from a remote repository is:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git pull {remote name} {branch}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git pull origin master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To pull the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch from the &lt;code class=&quot;highlighter-rouge&quot;&gt;origin&lt;/code&gt; remote repository.&lt;/p&gt;
+
+&lt;h2 id=&quot;listing-commits&quot;&gt;Listing Commits&lt;/h2&gt;
+
+&lt;p&gt;In order to list all commits in your local repository (including those pulled from remote repositories) use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git log&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;p&gt;There are many variations of this command, but the most useful are:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Lists all commits in a default view, you can press &lt;code class=&quot;highlighter-rouge&quot;&gt;space&lt;/code&gt; to move to the next page, and &lt;code class=&quot;highlighter-rouge&quot;&gt;q&lt;/code&gt; to exit.&lt;/p&gt;
+
+&lt;p&gt;Example output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;commit fb74d318ee5552a3656bf7b96d55cdacd4895f86
+Author: xxx@gmail.com &amp;lt;robstr@PC-ROBSTR-YOGA.saltsea.net&amp;gt;
+Date:   Tue Dec 16 11:27:49 2014 -0600
+
+	intial commit of ghost to azure
+
+commit 62d55ac165e8d3ce96c87ddff1cf3357d5ee4a67
+Merge: 5d69839 1c452a6
+Author: xxxx &amp;lt;xxx@gmail.com&amp;gt;
+Date:   Mon Dec 15 20:02:11 2014 +0000
+
+	Merge branch 'master' @ 0.5.7 into stable
+
+commit 1c452a605299861630a1d53ea2133f5a1f2f283f
+Author: xxxx &amp;lt;xxx@gmail.com&amp;gt;
+Date:   Mon Dec 15 17:09:24 2014 +0000
+
+Version bump to 0.5.7
+
+commit 7d0deebc086618835853f64489005f1a001b60aa
+Merge: 4c12f5a ff321e0
+Author: xxxx &amp;lt;xxx@gmail.com&amp;gt;
+Date:   Mon Dec 15 15:58:08 2014 +0000
+
+	Merge pull request #4653 from jaswilli/client-data
+
+	Do not include url and author_id in post payload.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;For a more condensed version of the above use:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log --oneline
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Example output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fb74d31 intial commit of ghost
+62d55ac Merge branch 'master' @ 0.5.7 into stable
+1c452a6 Version bump to 0.5.7
+7d0deeb Merge pull request #4653 from jaswilli/client-data
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;For a more detailed view you can use:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git log --stats
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;the-head-commit&quot;&gt;The HEAD Commit&lt;/h2&gt;
+
+&lt;p&gt;The keyword &lt;code class=&quot;highlighter-rouge&quot;&gt;HEAD&lt;/code&gt; is always used to indicate the most recent commit.  When using any of the commands listed below and not specifying a specific commit, git uses the &lt;code class=&quot;highlighter-rouge&quot;&gt;HEAD&lt;/code&gt; commit by default.&lt;/p&gt;
+
+&lt;h2 id=&quot;undoing-staged-files-and-modifications-git-reset-and-git-checkout&quot;&gt;Undoing Staged Files and Modifications (git reset and git checkout)&lt;/h2&gt;
+
+&lt;p&gt;There are many different approaches that can be used to undo changes.  Regardless of the approach, it’s important to understand if the files you want to undo have been &lt;strong&gt;staged&lt;/strong&gt; or &lt;strong&gt;committed&lt;/strong&gt;.  In addition you should consider whether or not you’ve &lt;strong&gt;pushed&lt;/strong&gt; your changes to a remote repository.&lt;/p&gt;
+
+&lt;p&gt;Note that when using the &lt;code class=&quot;highlighter-rouge&quot;&gt;git reset&lt;/code&gt; command, the flag &lt;code class=&quot;highlighter-rouge&quot;&gt;--mixed&lt;/code&gt; is used by default when it’s applicable.  &lt;code class=&quot;highlighter-rouge&quot;&gt;--mixed&lt;/code&gt; will leave any modifications you have made intact.&lt;/p&gt;
+
+&lt;h3 id=&quot;undoing-the-staging-to-a-specific-file-non-destructive-to-working-directory&quot;&gt;Undoing the Staging to a Specific File (non destructive to working directory)&lt;/h3&gt;
+
+&lt;p&gt;Sometimes you simply want to unstage a specific file, so that it won’t be included as part of the commit.&lt;/p&gt;
+
+&lt;p&gt;Please note that in this case you are not overwriting the contents of the file that you want to &lt;strong&gt;unstage&lt;/strong&gt;, you simply telling git not to include this file in the staging area.  This command will leave all your changes to the file intact.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset {filename}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Which can be more explicitly typed as:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset HEAD {filename}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Will unstage a specific file.  Once again, this will not overwrite the file, it will only unstage it.  Changes made will remain.&lt;/p&gt;
+
+&lt;h3 id=&quot;undoing-staging-of-all-files-non-destructive-to-working-directory&quot;&gt;Undoing Staging of all Files (non destructive to working directory)&lt;/h3&gt;
+
+&lt;p&gt;If you incorrectly built up your staging area, sometimes it makes sense to simply unstage all files and then build up the staging area again.&lt;/p&gt;
+
+&lt;p&gt;To do this, you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git reset&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Which can be more explicity typed as:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;get reset --mixed HEAD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Once again, this does not overwrite any files, it simply unstages them all.  All chages will remain.&lt;/p&gt;
+
+&lt;h3 id=&quot;undoing-the-staging-and-modifications-to-a-specific-file-destructive-to-working-directory&quot;&gt;Undoing the Staging and Modifications to a Specific File (destructive to working directory)&lt;/h3&gt;
+
+&lt;p&gt;If you want to simultaneosuly unstage a specific file and undo all changes to that file so that it matches the most recent commit (e.g. the &lt;code class=&quot;highlighter-rouge&quot;&gt;HEAD&lt;/code&gt; commit), use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout {filename}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Which can be more explicity typed as:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout HEAD {filename}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Once agin, this will unstage that specific file &lt;strong&gt;and&lt;/strong&gt; undo any modiciations made to that specific file.&lt;/p&gt;
+
+&lt;h3 id=&quot;undoing-staging-and-modifications-of-all-files-destructive-to-working-directory&quot;&gt;Undoing Staging and Modifications of all Files (destructive to working directory)&lt;/h3&gt;
+
+&lt;p&gt;If you want to simultaneosuly unstage all files and undo all changes so that repository matches the most recent commit (e.g. the &lt;code class=&quot;highlighter-rouge&quot;&gt;HEAD&lt;/code&gt; commit), use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git reset&lt;/code&gt; with the &lt;code class=&quot;highlighter-rouge&quot;&gt;--hard&lt;/code&gt; flag:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset --hard
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Which can be more explicity typed as:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset --hard HEAD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Once agin, this will unstage all files &lt;strong&gt;and&lt;/strong&gt; undo any modiciations made to files in your repository.&lt;/p&gt;
+
+&lt;h2 id=&quot;undoing-commits&quot;&gt;Undoing Commits&lt;/h2&gt;
+
+&lt;p&gt;But what happens if you’ve already created a commit?  Have no fear, git provides two ways to do this: a “safe” mechanism and a “rewrite history” mechanism.&lt;/p&gt;
+
+&lt;h3 id=&quot;undoing-a-commit-the-safe-way-git-revert&quot;&gt;Undoing a Commit the Safe Way (git revert)&lt;/h3&gt;
+
+&lt;p&gt;If you want to undo an entire commit the “safe” way use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git revert&lt;/code&gt; command. It creates a new commit which rolls back all the changes introduced in a specific commit.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git revert 1c452a6
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Will create a new commit that completely undoes all the changes in the &lt;code class=&quot;highlighter-rouge&quot;&gt;1c452a6&lt;/code&gt; commit.&lt;/p&gt;
+
+&lt;p&gt;This is considered a “safer” way of doing things than the &lt;code class=&quot;highlighter-rouge&quot;&gt;git reset&lt;/code&gt; command.  This is because it keeps the commit history completely intact.  The commit that is being rolled back still exists, you’re simply creating a new commit that undoes all the changes in the targeted old commit.&lt;/p&gt;
+
+&lt;p&gt;Another powerful aspect of using &lt;code class=&quot;highlighter-rouge&quot;&gt;git revert&lt;/code&gt; is that it can target &lt;strong&gt;any&lt;/strong&gt; commit, not just the most current.  You can target a commit from 5 months ago and still undo all changes that were made as part of that commit.&lt;/p&gt;
+
+&lt;p&gt;Finally because &lt;code class=&quot;highlighter-rouge&quot;&gt;git revert&lt;/code&gt; simply creates another commit that undoes the changes in a previous commit, your currently staged files and modified files remain completely intact.&lt;/p&gt;
+
+&lt;h3 id=&quot;undoing-commits-the-rewrite-history-way-git-reset&quot;&gt;Undoing Commits the “Rewrite History” Way (git reset)&lt;/h3&gt;
+
+&lt;p&gt;Please note that undoing commits after they have been pushed to a remote repository is &lt;strong&gt;not recommended under any circumstance&lt;/strong&gt;.  This approach should only be used if you have been commiting locally and wish to undo some of of those local commits, or reorganize them.&lt;/p&gt;
+
+&lt;p&gt;There are two ways of undoing local commits: &lt;code class=&quot;highlighter-rouge&quot;&gt;--mixed&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;--hard&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;undoing-commits-the-rewrite-history-way-for-commit-reorganization-mixed&quot;&gt;Undoing Commits the “Rewrite History” Way for Commit Reorganization (–mixed)&lt;/h4&gt;
+
+&lt;p&gt;It’s pretty common to want to reorganize one or more commits into several smaller more atomic commits.&lt;/p&gt;
+
+&lt;p&gt;To do this use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git reset&lt;/code&gt; command with the commit ID of the commit you want to reset your local repository to. Note: &lt;code class=&quot;highlighter-rouge&quot;&gt;--mixed&lt;/code&gt; is the default flag.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset {Commit ID}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This command will reset your local repository to a specific commit, and unstage all files.  &lt;strong&gt;It will, however, leave all modified files in your current working directly alone.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For example, let’s assume you just created a large commit that you want to break into several smaller ones.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset HEAD~1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Will reset your local repository to previous commit (before you created the large commit).&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add {specific file}
+git add {specific file}
+git add {specific dir}
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Stages the specific files and directories you want to include in the first of your smaller commits.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit -m &quot;smaller commit 1&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Creates the first of the two smaller commits.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ggit add {specific file}
+git add {specific file}
+git add {specific dir}
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Stages the rest of the files and directories you want to include in the second of your smaller commits.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit -m &quot;smaller commit 2&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Creates the second of the two smaller commits.&lt;/p&gt;
+
+&lt;h4 id=&quot;undoing-commits-the-rewrite-history-because-you-messed-up-hard&quot;&gt;Undoing Commits the “Rewrite History” Because You Messed Up (–hard)&lt;/h4&gt;
+
+&lt;p&gt;Let’s say you just really messed up and created commits that you want to get rid of completely.&lt;/p&gt;
+
+&lt;p&gt;To do this use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git reset --hard&lt;/code&gt; command with the commit ID of the commit you want to reset your local repository to.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset --hard {Commit ID}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This command will reset your local repository to a specific commit, and unstage all files.  &lt;strong&gt;It will remove any and all modified files that have been made since the commit your resetting to&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;For example, let’s assume you just created two commits that you really hate, and you just want to completely undo them and all the files you changed.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git reset --hard HEAD~2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Will reset your local repository to the commit directly before the two new commits you created.  All staged files and all file modifications are completely removed and your local repository will look exactly the way it looked when you created the commit you’re resetting to.&lt;/p&gt;
+
+&lt;h2 id=&quot;viewing-older-commits-git-checkout&quot;&gt;Viewing Older Commits (git checkout)&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout&lt;/code&gt; command performs three specific functions:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;It allows you to view the state of the local repository at the point in time when an old commit was made.&lt;/li&gt;
+  &lt;li&gt;It allows you to change branches.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;We’re going to focus on #1 and save branching for another discussion&lt;/p&gt;
+
+&lt;h3 id=&quot;viewing-an-entire-older-commit-non-destructive&quot;&gt;Viewing an Entire Older Commit (non destructive)&lt;/h3&gt;
+
+&lt;p&gt;There are times that you wish to view your local repository exactly the way it looked when a certain old commit was made.  The interesting thing about this operation is that &lt;strong&gt;you will not loose any of your existing work and changes.&lt;/strong&gt; during this process.  You can also compile, and run the source code exactly the way it existed at the time of a specific commit.&lt;/p&gt;
+
+&lt;p&gt;To view the repository the way it looked at the time of an older commit, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout&lt;/code&gt; command.  This temporarily affects your current working directory and all sub-directories, but you will not lose your existing work and changes.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout {commit ID}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout 62d55ac
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Will update the working directory and all sub-directories to match the exact state of the &lt;code class=&quot;highlighter-rouge&quot;&gt;62d55ac&lt;/code&gt; commit. &lt;strong&gt;Note that nothing you do at this point will be saved to your local repository.&lt;/strong&gt;.  This will also put you into “detached HEAD state”, which basically means you shouldn’t do any commits because they’ll be completely lost.  This is actually a safety mechanism.&lt;/p&gt;
+
+&lt;p&gt;You can also use a syntax to specify a certain number of versions before a given commit. This syntax looks like: &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;back&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;For example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout HEAD~2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Will update the working directory and all sub-directories to two commits before the most current commit.&lt;/p&gt;
+
+&lt;p&gt;So if your &lt;code class=&quot;highlighter-rouge&quot;&gt;git log --oneline&lt;/code&gt; is:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fb74d31 intial commit of ghost
+62d55ac Merge branch 'master' @ 0.5.7 into stable
+1c452a6 Version bump to 0.5.7
+7d0deeb Merge pull request #4653 from jaswilli/client-data
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We would go back to commit ID &lt;code class=&quot;highlighter-rouge&quot;&gt;1c452a6&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To go pick up where you left off and get back to “attached HEAD state”, including all of your modified and staged files run:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout {branch}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Hopefully you’ve enjoyed our Git 101 post.  We’re planning on creating a second post in the future that covers branching in more detail.  For now, you should be completely comfortable working with basic git functions.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 01 Jun 2017 09:00:00 -0400</pubDate>
+        <link>http://restfulbrilliance.com/blog/2017/06/01/git-101.html</link>
+        <guid isPermaLink="true">http://restfulbrilliance.com/blog/2017/06/01/git-101.html</guid>
+        
+        <category>git</category>
+        
+        <category>101</category>
+        
+        <category>help</category>
+        
+        <category>tutorial</category>
+        
+        
+      </item>
     
       <item>
         <title>Restfulbrilliance.com is Live!</title>

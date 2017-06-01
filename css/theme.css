@@ -1752,8 +1752,8 @@ code {
   font-family: Consolas, "Liberation Mono", Courier, monospace;
   font-weight: normal;
   color: #0a0a0a;
-  background-color: #e6e6e6;
-  border: 1px solid #cacaca;
+  background-color: #f2f2f2;
+  border: 1px solid rgba(21, 21, 21, 0.1);
   padding: 0.125rem 0.3125rem 0.0625rem;
 }
 
@@ -5702,4 +5702,15 @@ table.hover tr:nth-of-type(even):hover {
 .long-delay {
   -webkit-animation-delay: 700ms !important;
           animation-delay: 700ms !important;
+}
+
+code {
+  font-size: .8125rem;
+}
+
+pre > code {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  font-size: .875rem;
 }

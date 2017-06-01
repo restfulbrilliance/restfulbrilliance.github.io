@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+﻿<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git 101 (Tutorial)</title>
+    <meta name="description" content="This document provides an overview of git and its most useful commands.  Git can appear daunting to beginners, and many people prefer to use GUIs to handle t...">
+    <link rel="canonical" href="http://restfulbrilliance.com/blog/2017/06/01/git-101.html">
+    <link rel="alternate" type="application/rss+xml" title="Restful Brilliance LLC" href="http://restfulbrilliance.com/feed.xml">
+    <link rel="shortcut icon" href="/img/favicons/favicon-32x32.png">
+    <link href='https://fonts.googleapis.com/css?family=Anaheim%7CQuattrocento+Sans:400,400italic,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/gem.css" />
+    <link rel="stylesheet" href="/css/icomoon.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+
+    <!-- Scripts -->
+    <script src="/js/jquery.min.js"></script>
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+      <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+</head>
+
+<body class="pageBorder">
+    <div class="fakeloader"></div>
+<div class="flbackdrop"></div>
+
+<header class="relPosition fixedHeader">
+    <div class="menuBar slide headroom--top" id="autoHide">
+        <div class="row expanded">
+            <div class="small-6 medium-3 columns">
+                <div id="logo">
+                    <a href="/" class="sd-logo"><img src="/img/logo.png" alt="gem"></a>
+                    <a href="/" class="hd-logo"><img src="/img/logo@2x.png" alt="gem"></a>
+                </div>
+            </div>
+            <div class="small-6 medium-9 columns noPadding">
+                <div id="menuIcon" class="hide-for-large">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="menuInline classic large-text-right">
+                    <ul data-magellan data-animation-duration="800" data-bar-offset="50">
+                        
+                        <li class="navLink"><a href="/">Home</a></li>
+                        <li class="navLink"><a href="/blog">Blog</a></li>
+                        
+                        <li class="navLink">
+                            <a class="navIcon" href="https://www.twitter.com/restbrilliance"><span class="icon-twitter"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+    <div class="mainWrapper">
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="heroWrapper relPosition">
+        <div class="heroBlog " style="background-image: url('/img/hero/gimp-101-2200x1200.jpg'); background-position: 50% 50%;"></div>
+    </div>
+
+    <div class="postMeta">
+        <div class="row">
+            <div class="small-12 columns noPadding">
+                <div class="blogItemMeta">
+                    <p class="postCategory">
+                        git, 101, help, and tutorial
+                    </p>
+                    <p class="postDate"><time datetime="2017-06-01T09:00:00-04:00" itemprop="datePublished">Jun 1, 2017</time></p>
+                    <p class="postShareIcons">
+                        Share:
+                        <a href="#"><span class="icon-facebook"></span></a>
+                        <a href="#"><span class="icon-twitter"></span></a>
+                        <a href="#"><span class="icon-google-plus"></span></a>
+                        <!--<a href="#"><span class="icon-pinterest"></span></a>
+                        <a href="#"><span class="icon-tumblr"></span></a>-->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row marginBottom">
+
+        <div class="small-12 columns noPadding">
+
+            <div class="postContent">
+
+                <h2 class="postTitle" itemprop="name headline">Git 101 (Tutorial)</h2>
+                <div class="postEntry" itemprop="articleBody">
+                    <p>This document provides an overview of git and its most useful commands.  Git can appear daunting to beginners, and many people prefer to use GUIs to handle their git interactions.  These tools and GUIs can be helpful for beginners, but you’ll find git more useful and powerful once you understand the underlying commands.</p>
+
+<p>Learning git via the command line is actually much simpler than most people believe.  Hopefully this post will help you on your journey to becoming a git commandline guru!</p>
+
+<h2 id="repository-creation">Repository Creation</h2>
+
+<p>There are two main ways to create new git repositories:</p>
+
+<ol>
+  <li>New local repository on the file system.</li>
+  <li>Cloning an existing remote repository which is hosted elsewhere (e.g. Github).</li>
+</ol>
+
+<h3 id="creating-a-local-repository-on-your-filesystem">Creating a Local Repository (on your filesystem)</h3>
+
+<p>Even if you are only planning on building software locally, it’s a great idea to use git.  This will let you keep track of your changes, roll-back if neccessary, and manage your code across branches.</p>
+
+<p>To create a local git repository, simply go to the directory that will become your repository and initialize it.  Don’t worry about initializing a new git repository in a directory that already contains files, it won’t modify any existing files.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd ~/projects/my-repo
+git init
+</code></pre>
+</div>
+
+<p>Now you can continue to create / modify source code in that directory.  A best practice is to get your initial commit in place as quickly as possible.  When you’re ready, you’ll want to <strong>stage</strong> your source code for the initial commit.  To stage file(s) for a commit use the <code class="highlighter-rouge">git add</code> command.  You can stage an individual file or directory, or stage all files and directories from your current working directory.</p>
+
+<ul>
+  <li>To stage a single file use: <code class="highlighter-rouge">git add {filename}'</code>. Example: <code class="highlighter-rouge">git add my-file.html</code></li>
+  <li>To stage a directory and all files inside that directory use: <code class="highlighter-rouge">git add {dir}</code>. Example: <code class="highlighter-rouge">git add ./my-directory</code></li>
+  <li>To stage all files and directories that are inside your current working directory use: <code class="highlighter-rouge">git add .</code></li>
+</ul>
+
+<p>In pracite the <code class="highlighter-rouge">git add .</code> command is the most commonly used.  It’s intelligent enough to only stage files that have changed since the last commit, and it won’t stage a file more than once.  If you haven’t made an initial commit, this means that all files (with some exceptions like the <code class="highlighter-rouge">.git</code> directory) will be staged.</p>
+
+<p>Here’s where many people get confused.  Staging files does not create a commit into the local repository.  Instead it’s getting files ready for a commit.  This allows you to pick and choose what files will be included within the commit.  Go ahead and stage all the files in your local repository.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git add .
+</code></pre>
+</div>
+
+<p>You can check the files that are staged for a commit by using the <code class="highlighter-rouge">git status</code> command.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git status
+</code></pre>
+</div>
+
+<p>When you’re ready, commit the files that are staged using the <code class="highlighter-rouge">git commit</code> command.  It’s a good pratice to add a message for the commit by using the <code class="highlighter-rouge">-m</code> flag.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git commit -m "my first commit, like a boss yo!"
+</code></pre>
+</div>
+
+<p>You might be wondering what the point of staging files is?  It’s useful if you want to break up your changes into two or more commits.  For example, let’s say you haven’t committed in a while, and you’ve made lots of changes.  You would have preferred to manke more granual commits, but it’s too late for that.  With git it’s no problem.  You just stage the files you want in your first commit, then commit.  Then stage the next set of files for your second commit, then commit, etc.</p>
+
+<p>Now you know the basics of staging and commit files to a local repository.</p>
+
+<h3 id="cloning-an-existing-repository-from-a-remote-system-eg-github">Cloning an Existing Repository from a Remote System (e.g. Github)</h3>
+
+<p>If you’ve already created a repository somewhere else (e.g. Github) or you’re jumping on to work with somebody else that already has a repository setup, you’ll need to clone a repository.</p>
+
+<p>The default branch for repositories is called <code class="highlighter-rouge">master</code>.  Unless your team tells you otherwise, you should clone this branch to get started.</p>
+
+<p>To clone a repository’s <code class="highlighter-rouge">master</code> branch, use the <code class="highlighter-rouge">git clone</code> command.  Make sure you’re located in the directory in which you want to build a new directory for the repository.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone {url to remote repository}
+</code></pre>
+</div>
+
+<p>For example if you’re in <code class="highlighter-rouge">~/projects</code> and run:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/rstrube/myproject.git
+</code></pre>
+</div>
+
+<p>Git will clone the repository to: <code class="highlighter-rouge">~/projects/myproject.git</code>.</p>
+
+<p>You can also add an additional parameter which determines which directory the repository should be cloned into.</p>
+
+<p>For example if you’re in <code class="highlighter-rouge">~/projects</code> and run:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/rstrube/myproject.git super_duper_special_dir
+</code></pre>
+</div>
+
+<p>Git will clone the repository to <code class="highlighter-rouge">~/projects/super_duper_special_dir</code>.</p>
+
+<p>To clone a specific branch of a repository use the <code class="highlighter-rouge">-b {branch}</code> flag.</p>
+
+<p>For example if you’re in <code class="highlighter-rouge">~/projects</code> and run:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone -b prototype https://github.com/rstrube/rstrube.github.io myproj_prototype
+</code></pre>
+</div>
+
+<p>Git will clone the <code class="highlighter-rouge">prototype</code> branch to <code class="highlighter-rouge">~/projects/myproj_prototype</code>.</p>
+
+<h2 id="getting-the-status-of-your-changes">Getting the Status of your Changes</h2>
+
+<p>As we mentioned earlier, the <code class="highlighter-rouge">git status</code> can be used to get the statuses of the files in your local repository.  To elaborate, files can exist in one of several categories:</p>
+
+<ol>
+  <li><strong>Staged</strong> - these are files that will be included in the next commit to your local repository.</li>
+  <li><strong>Unstaged</strong> - these are files that will not be included in the next commit.</li>
+  <li><strong>Untracked</strong> - these are files that are ignored and will not be included in the next commit.</li>
+  <li><strong>Committed</strong> - these are files that have been committed to the local repository, but still need to be pushed to the remote repository(ies).</li>
+</ol>
+
+<p>To view all of your changes you can use the <code class="highlighter-rouge">status</code> command.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git status
+</code></pre>
+</div>
+
+<p>You’ll see something like:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># On branch master
+# Changes to be committed:
+# (use "git reset HEAD ..." to unstage)
+#
+#modified: ModifiedClass.cs
+#
+# Changes not staged for commit:
+# (use "git add ..." to update what will be committed)
+# (use "git checkout -- ..." to discard changes in working directory)
+#
+#modified: NewClass.cs
+#
+# Untracked files:
+# (use "git add ..." to include in what will be committed)
+#
+#Untracked.config
+</code></pre>
+</div>
+
+<h2 id="staging-files">Staging Files</h2>
+
+<p>We talked about staging files eariler, but let’s go into more detail.</p>
+
+<p>To <strong>stage</strong> files, you must use the <code class="highlighter-rouge">git add</code> command.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git add {directory}
+</code></pre>
+</div>
+
+<p>Will stage all modified files in the specified directory and all sub-directories within that directory.</p>
+
+<p>Therefore</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git add .
+</code></pre>
+</div>
+
+<p>Will stage all modified files in the current working directory and sub-directories of the current working directory.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git add {filename}
+</code></pre>
+</div>
+
+<p>Will stage a specific file.  This can also be important when staging a brand new file.</p>
+
+<p>As mentioned eariler, it’s common to break up lots of changes across several commits.  To do this, stage the specific files you wish to to include in the first commit, then commit.  Then repeat the process with the files to be included in the second commit, and so on.</p>
+
+<h2 id="committing-files">Committing Files</h2>
+
+<p>We talked about committing files eariler, but let’s go into more detail.</p>
+
+<p>It’s important to remember that committing really means committing to your local repository.  To push your changes to your remote repository (e.g. Github) you need to execute a <code class="highlighter-rouge">push</code>.</p>
+
+<p>To commit all staged files to your local git repository use:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git commit
+</code></pre>
+</div>
+
+<p>This will open up a text editor and ask you for a commit message.</p>
+
+<p>Sometimes it’s easier just to provide the message directly as part of the commit command.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git commit -m "super duper awesome commit!"
+</code></pre>
+</div>
+
+<h2 id="working-with-remote-repositories">Working with Remote Repositories</h2>
+
+<p>One of the most important aspects to using git as a source control system is that you utilize a remote repository to store your code.  Although technically you can get by with using only a local repository, if you were to have problems with your local machine, your code would be gone.  Using a service like Github ensures that you can backup your code without the danger of losing anything.</p>
+
+<p>In order to associate your local repository with a remote repository, you need to create at least one <strong>remote</strong>.  Think of remotes as a simple way of creating an alias or a bookmark to a URL which points to a remote repository.</p>
+
+<p>To begin with, you can always list out all existing remotes for a repository by using:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git remote -v
+</code></pre>
+</div>
+
+<p>You can easily add a remote to an existing local repository using the <code class="highlighter-rouge">git remote add</code> command.  Every remote requires a unique name.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git remote add myremote https://github.com/rstrube/rstrube.github.io
+</code></pre>
+</div>
+
+<p>Note: the default remote when using Github is called <code class="highlighter-rouge">origin</code>.</p>
+
+<p>To remove a remote you can use:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git remote remove myremote
+</code></pre>
+</div>
+
+<p>To rename a remote you can use:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git remote rename {old name} {new name}
+</code></pre>
+</div>
+
+<h2 id="pulling-and-pushing">Pulling and Pushing</h2>
+
+<p>Pulling and pushing allows you to download commits and upload local commits to and from the remote repository.</p>
+
+<p>The command to push all local commits to a remote repository is:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git push {remote name} {branch}
+</code></pre>
+</div>
+
+<p>If for some reason your local repository’s branch is different than that branch name in the remote repository you want to push to, you can slightly modify the push command</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git push {remote name} {local branch}:{remote branch}
+</code></pre>
+</div>
+
+<p>Example: if we are working on the <code class="highlighter-rouge">stable</code> branch in our local repository but we want to push it to the <code class="highlighter-rouge">master</code> branch of the remote repository we would use:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git push {remote name} stable:master
+</code></pre>
+</div>
+
+<p>The command to pull changes from a remote repository is:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git pull {remote name} {branch}
+</code></pre>
+</div>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git pull origin master
+</code></pre>
+</div>
+
+<p>To pull the <code class="highlighter-rouge">master</code> branch from the <code class="highlighter-rouge">origin</code> remote repository.</p>
+
+<h2 id="listing-commits">Listing Commits</h2>
+
+<p>In order to list all commits in your local repository (including those pulled from remote repositories) use the <code class="highlighter-rouge">git log</code> command.</p>
+
+<p>There are many variations of this command, but the most useful are:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git log
+</code></pre>
+</div>
+
+<p>Lists all commits in a default view, you can press <code class="highlighter-rouge">space</code> to move to the next page, and <code class="highlighter-rouge">q</code> to exit.</p>
+
+<p>Example output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>commit fb74d318ee5552a3656bf7b96d55cdacd4895f86
+Author: xxx@gmail.com &lt;robstr@PC-ROBSTR-YOGA.saltsea.net&gt;
+Date:   Tue Dec 16 11:27:49 2014 -0600
+
+	intial commit of ghost to azure
+
+commit 62d55ac165e8d3ce96c87ddff1cf3357d5ee4a67
+Merge: 5d69839 1c452a6
+Author: xxxx &lt;xxx@gmail.com&gt;
+Date:   Mon Dec 15 20:02:11 2014 +0000
+
+	Merge branch 'master' @ 0.5.7 into stable
+
+commit 1c452a605299861630a1d53ea2133f5a1f2f283f
+Author: xxxx &lt;xxx@gmail.com&gt;
+Date:   Mon Dec 15 17:09:24 2014 +0000
+
+Version bump to 0.5.7
+
+commit 7d0deebc086618835853f64489005f1a001b60aa
+Merge: 4c12f5a ff321e0
+Author: xxxx &lt;xxx@gmail.com&gt;
+Date:   Mon Dec 15 15:58:08 2014 +0000
+
+	Merge pull request #4653 from jaswilli/client-data
+
+	Do not include url and author_id in post payload.
+</code></pre>
+</div>
+
+<p>For a more condensed version of the above use:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git log --oneline
+</code></pre>
+</div>
+
+<p>Example output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>fb74d31 intial commit of ghost
+62d55ac Merge branch 'master' @ 0.5.7 into stable
+1c452a6 Version bump to 0.5.7
+7d0deeb Merge pull request #4653 from jaswilli/client-data
+</code></pre>
+</div>
+
+<p>For a more detailed view you can use:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git log --stats
+</code></pre>
+</div>
+
+<h2 id="the-head-commit">The HEAD Commit</h2>
+
+<p>The keyword <code class="highlighter-rouge">HEAD</code> is always used to indicate the most recent commit.  When using any of the commands listed below and not specifying a specific commit, git uses the <code class="highlighter-rouge">HEAD</code> commit by default.</p>
+
+<h2 id="undoing-staged-files-and-modifications-git-reset-and-git-checkout">Undoing Staged Files and Modifications (git reset and git checkout)</h2>
+
+<p>There are many different approaches that can be used to undo changes.  Regardless of the approach, it’s important to understand if the files you want to undo have been <strong>staged</strong> or <strong>committed</strong>.  In addition you should consider whether or not you’ve <strong>pushed</strong> your changes to a remote repository.</p>
+
+<p>Note that when using the <code class="highlighter-rouge">git reset</code> command, the flag <code class="highlighter-rouge">--mixed</code> is used by default when it’s applicable.  <code class="highlighter-rouge">--mixed</code> will leave any modifications you have made intact.</p>
+
+<h3 id="undoing-the-staging-to-a-specific-file-non-destructive-to-working-directory">Undoing the Staging to a Specific File (non destructive to working directory)</h3>
+
+<p>Sometimes you simply want to unstage a specific file, so that it won’t be included as part of the commit.</p>
+
+<p>Please note that in this case you are not overwriting the contents of the file that you want to <strong>unstage</strong>, you simply telling git not to include this file in the staging area.  This command will leave all your changes to the file intact.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset {filename}
+</code></pre>
+</div>
+
+<p>Which can be more explicitly typed as:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset HEAD {filename}
+</code></pre>
+</div>
+
+<p>Will unstage a specific file.  Once again, this will not overwrite the file, it will only unstage it.  Changes made will remain.</p>
+
+<h3 id="undoing-staging-of-all-files-non-destructive-to-working-directory">Undoing Staging of all Files (non destructive to working directory)</h3>
+
+<p>If you incorrectly built up your staging area, sometimes it makes sense to simply unstage all files and then build up the staging area again.</p>
+
+<p>To do this, you can use the <code class="highlighter-rouge">git reset</code> command.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset
+</code></pre>
+</div>
+
+<p>Which can be more explicity typed as:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>get reset --mixed HEAD
+</code></pre>
+</div>
+
+<p>Once again, this does not overwrite any files, it simply unstages them all.  All chages will remain.</p>
+
+<h3 id="undoing-the-staging-and-modifications-to-a-specific-file-destructive-to-working-directory">Undoing the Staging and Modifications to a Specific File (destructive to working directory)</h3>
+
+<p>If you want to simultaneosuly unstage a specific file and undo all changes to that file so that it matches the most recent commit (e.g. the <code class="highlighter-rouge">HEAD</code> commit), use the <code class="highlighter-rouge">git checkout</code> command.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout {filename}
+</code></pre>
+</div>
+
+<p>Which can be more explicity typed as:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout HEAD {filename}
+</code></pre>
+</div>
+
+<p>Once agin, this will unstage that specific file <strong>and</strong> undo any modiciations made to that specific file.</p>
+
+<h3 id="undoing-staging-and-modifications-of-all-files-destructive-to-working-directory">Undoing Staging and Modifications of all Files (destructive to working directory)</h3>
+
+<p>If you want to simultaneosuly unstage all files and undo all changes so that repository matches the most recent commit (e.g. the <code class="highlighter-rouge">HEAD</code> commit), use the <code class="highlighter-rouge">git reset</code> with the <code class="highlighter-rouge">--hard</code> flag:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset --hard
+</code></pre>
+</div>
+
+<p>Which can be more explicity typed as:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset --hard HEAD
+</code></pre>
+</div>
+
+<p>Once agin, this will unstage all files <strong>and</strong> undo any modiciations made to files in your repository.</p>
+
+<h2 id="undoing-commits">Undoing Commits</h2>
+
+<p>But what happens if you’ve already created a commit?  Have no fear, git provides two ways to do this: a “safe” mechanism and a “rewrite history” mechanism.</p>
+
+<h3 id="undoing-a-commit-the-safe-way-git-revert">Undoing a Commit the Safe Way (git revert)</h3>
+
+<p>If you want to undo an entire commit the “safe” way use the <code class="highlighter-rouge">git revert</code> command. It creates a new commit which rolls back all the changes introduced in a specific commit.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git revert 1c452a6
+</code></pre>
+</div>
+
+<p>Will create a new commit that completely undoes all the changes in the <code class="highlighter-rouge">1c452a6</code> commit.</p>
+
+<p>This is considered a “safer” way of doing things than the <code class="highlighter-rouge">git reset</code> command.  This is because it keeps the commit history completely intact.  The commit that is being rolled back still exists, you’re simply creating a new commit that undoes all the changes in the targeted old commit.</p>
+
+<p>Another powerful aspect of using <code class="highlighter-rouge">git revert</code> is that it can target <strong>any</strong> commit, not just the most current.  You can target a commit from 5 months ago and still undo all changes that were made as part of that commit.</p>
+
+<p>Finally because <code class="highlighter-rouge">git revert</code> simply creates another commit that undoes the changes in a previous commit, your currently staged files and modified files remain completely intact.</p>
+
+<h3 id="undoing-commits-the-rewrite-history-way-git-reset">Undoing Commits the “Rewrite History” Way (git reset)</h3>
+
+<p>Please note that undoing commits after they have been pushed to a remote repository is <strong>not recommended under any circumstance</strong>.  This approach should only be used if you have been commiting locally and wish to undo some of of those local commits, or reorganize them.</p>
+
+<p>There are two ways of undoing local commits: <code class="highlighter-rouge">--mixed</code> or <code class="highlighter-rouge">--hard</code></p>
+
+<h4 id="undoing-commits-the-rewrite-history-way-for-commit-reorganization-mixed">Undoing Commits the “Rewrite History” Way for Commit Reorganization (–mixed)</h4>
+
+<p>It’s pretty common to want to reorganize one or more commits into several smaller more atomic commits.</p>
+
+<p>To do this use the <code class="highlighter-rouge">git reset</code> command with the commit ID of the commit you want to reset your local repository to. Note: <code class="highlighter-rouge">--mixed</code> is the default flag.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset {Commit ID}
+</code></pre>
+</div>
+
+<p>This command will reset your local repository to a specific commit, and unstage all files.  <strong>It will, however, leave all modified files in your current working directly alone.</strong></p>
+
+<p>For example, let’s assume you just created a large commit that you want to break into several smaller ones.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset HEAD~1
+</code></pre>
+</div>
+
+<p>Will reset your local repository to previous commit (before you created the large commit).</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git add {specific file}
+git add {specific file}
+git add {specific dir}
+...
+</code></pre>
+</div>
+
+<p>Stages the specific files and directories you want to include in the first of your smaller commits.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git commit -m "smaller commit 1"
+</code></pre>
+</div>
+
+<p>Creates the first of the two smaller commits.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ggit add {specific file}
+git add {specific file}
+git add {specific dir}
+...
+</code></pre>
+</div>
+
+<p>Stages the rest of the files and directories you want to include in the second of your smaller commits.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git commit -m "smaller commit 2"
+</code></pre>
+</div>
+
+<p>Creates the second of the two smaller commits.</p>
+
+<h4 id="undoing-commits-the-rewrite-history-because-you-messed-up-hard">Undoing Commits the “Rewrite History” Because You Messed Up (–hard)</h4>
+
+<p>Let’s say you just really messed up and created commits that you want to get rid of completely.</p>
+
+<p>To do this use the <code class="highlighter-rouge">git reset --hard</code> command with the commit ID of the commit you want to reset your local repository to.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset --hard {Commit ID}
+</code></pre>
+</div>
+
+<p>This command will reset your local repository to a specific commit, and unstage all files.  <strong>It will remove any and all modified files that have been made since the commit your resetting to</strong>.</p>
+
+<p>For example, let’s assume you just created two commits that you really hate, and you just want to completely undo them and all the files you changed.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git reset --hard HEAD~2
+</code></pre>
+</div>
+
+<p>Will reset your local repository to the commit directly before the two new commits you created.  All staged files and all file modifications are completely removed and your local repository will look exactly the way it looked when you created the commit you’re resetting to.</p>
+
+<h2 id="viewing-older-commits-git-checkout">Viewing Older Commits (git checkout)</h2>
+
+<p>The <code class="highlighter-rouge">git checkout</code> command performs three specific functions:</p>
+
+<ol>
+  <li>It allows you to view the state of the local repository at the point in time when an old commit was made.</li>
+  <li>It allows you to change branches.</li>
+</ol>
+
+<p>We’re going to focus on #1 and save branching for another discussion</p>
+
+<h3 id="viewing-an-entire-older-commit-non-destructive">Viewing an Entire Older Commit (non destructive)</h3>
+
+<p>There are times that you wish to view your local repository exactly the way it looked when a certain old commit was made.  The interesting thing about this operation is that <strong>you will not loose any of your existing work and changes.</strong> during this process.  You can also compile, and run the source code exactly the way it existed at the time of a specific commit.</p>
+
+<p>To view the repository the way it looked at the time of an older commit, use the <code class="highlighter-rouge">git checkout</code> command.  This temporarily affects your current working directory and all sub-directories, but you will not lose your existing work and changes.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout {commit ID}
+</code></pre>
+</div>
+
+<p>Examples:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout 62d55ac
+</code></pre>
+</div>
+
+<p>Will update the working directory and all sub-directories to match the exact state of the <code class="highlighter-rouge">62d55ac</code> commit. <strong>Note that nothing you do at this point will be saved to your local repository.</strong>.  This will also put you into “detached HEAD state”, which basically means you shouldn’t do any commits because they’ll be completely lost.  This is actually a safety mechanism.</p>
+
+<p>You can also use a syntax to specify a certain number of versions before a given commit. This syntax looks like: <code class="highlighter-rouge"><span class="p">{</span><span class="err">commit</span><span class="w"> </span><span class="err">ID</span><span class="p">}</span><span class="err">~</span><span class="p">{</span><span class="err">number</span><span class="w"> </span><span class="err">back</span><span class="p">}</span></code>.</p>
+
+<p>For example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout HEAD~2
+</code></pre>
+</div>
+
+<p>Will update the working directory and all sub-directories to two commits before the most current commit.</p>
+
+<p>So if your <code class="highlighter-rouge">git log --oneline</code> is:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>fb74d31 intial commit of ghost
+62d55ac Merge branch 'master' @ 0.5.7 into stable
+1c452a6 Version bump to 0.5.7
+7d0deeb Merge pull request #4653 from jaswilli/client-data
+</code></pre>
+</div>
+
+<p>We would go back to commit ID <code class="highlighter-rouge">1c452a6</code>.</p>
+
+<p>To go pick up where you left off and get back to “attached HEAD state”, including all of your modified and staged files run:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git checkout {branch}
+</code></pre>
+</div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Hopefully you’ve enjoyed our Git 101 post.  We’re planning on creating a second post in the future that covers branching in more detail.  For now, you should be completely comfortable working with basic git functions.</p>
+
+                </div>
+
+                
+                <div class="row">
+                    <div class="small-12 columns">
+                        <div class="postNav clearfix">
+                            
+                            <a href="/blog/2016/08/08/restfulbrilliance-com-is-live.html" class="prevPost">
+                                <span class="icon-arrow-left float-left"></span>
+                                <div class="postNavTitle">
+                                    <span>Previous Post:</span>
+                                    <p>Restfulbrilliance.com is Live!</p>
+                                </div>
+                            </a>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+                
+
+                
+
+                <div class="row">
+                    <div class="small-12 columns">
+                        <div class="divider"></div>
+                    </div>
+                </div>
+
+                <div class="authorBox row relPosition">
+
+                    <div class="small-12 medium-2 columns noPadding">
+                        <div class="authorImg imgShadow">
+                            <img src="/img/author/default.png" alt="Robert Strube">
+                        </div>
+                    </div>
+
+                    <div class="small-12 medium-10 columns">
+                        <div class="authorContent bgGray" itemscope itemtype="http://schema.org/Person" itemprop="author">
+                            <h6 itemprop="name">Robert Strube</h6>
+                            
+                            <p>Robert Strube is the founder of RB.  He loves anything having to do with web development and security.  He also enjoys road cycling, hiking, skiing, motorcycles, and sailing.</p>
+                            
+                            <div>
+                                
+                                <a href="https://github.com/rstrube"><span class="icon-github"></span></a>
+                                
+                                
+                                <a href="https://twitter.com/rdstrube"><span class="icon-twitter"></span></a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+            </div>
+
+        </div>
+    </div>
+
+</article>
+        <footer>
+    <div class="row expanded footerWrapper">
+        <div class="small-12 medium-7 large-8 columns">
+            <div class="row">
+                <div class="small-12 columns">
+                    <div id="footerCopy">
+                        <h6>Restful Brilliance, LLC</h6>
+                        <p>&copy; Robert Strube. All rights reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="small-12 medium-5 large-4 columns show-for-medium">
+            <div class="row clearfix">
+                <div class="small-6 medium-7 large-9 columns">
+                    <div id="footerInfo">
+                        <p>rstrube -at- restfulbrilliance.com</p>
+                        <p>+1 484 899 0017</p>
+                    </div>
+                </div>
+
+                <div class="small-6 medium-5 large-3 columns">
+                    <div id="footerSocials">
+                        <!--<a href="#">Instagram</a>-->
+                        <a href="https://www.twitter.com/restbrilliance">Twitter</a>
+                        <!--<a href="#">Dribbble</a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/js/what-input.min.js"></script>
+<script src="/js/foundation.min.js"></script>
+<script src="/js/plugins.min.js"></script>
+<script src="/js/parallaxify.min.js"></script>
+<script src="/js/app.min.js"></script>
+<script src="/js/ajax-form.min.js"></script>
+<script>new Parallaxify().registerUpdate()</script>
+<script>
+    var header = document.querySelector('#autoHide');
+
+    new Headroom(header, {
+        tolerance: {
+            down: 2,
+            up: 5
+        },
+        offset: 100,
+        classes: {
+            initial: 'slide',
+            pinned: 'slideReset',
+            unpinned: 'slideUp'
+        }
+    }).init();
+</script>
+</body>
+</html>
