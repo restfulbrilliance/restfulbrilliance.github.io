@@ -3,7 +3,7 @@ layout: post
 title:  "Restfulbrilliance.com is Live!"
 date:   2016-08-08 18:00:00 -0400
 tags: announcements
-hero_img: "/img/hero/light-house-sunset-2200x1200.jpg"
+hero_img: "/img/hero/new-light-house-sunset-2200x1200.jpg"
 ---
 
 We're extremely happy that Restfulbrilliance.com has finally gone live!  We've got some exciting new projects on the horizon that we're looking forward to sharing with everybody.
