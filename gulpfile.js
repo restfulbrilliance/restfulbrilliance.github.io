@@ -2,7 +2,7 @@
 
     Description: Bliss Framwork Master Gulpfile
     Author: Robert Strube
-    Version: 0.0.1
+    Version: 0.8.0 
 
 -------------------------------------------------------------------*/
 
@@ -29,13 +29,12 @@ var _jekyllBuildInProgress = false;
 
 /*------------------------------------------------------------------
     Task: sass-build
-    Depends: clean
     Desription: generates ./_site/css/theme.css from
         ./_sass/theme.scss also copies all .css files from ./css/ to
         ./site/css. This allows developers to include static css into
         their generated site
 -------------------------------------------------------------------*/
-_gulp.task('sass-build', ['clean'], function () {
+_gulp.task('sass-build', ['clean-css'], function () {
 
     var sassStream = _gulp.src('_sass/theme.scss')
       .pipe(_gulpSass({ includePaths: _bowerSassPaths, outputStyle: 'expanded' })
@@ -51,13 +50,12 @@ _gulp.task('sass-build', ['clean'], function () {
 
 /*------------------------------------------------------------------
     Task: js-build
-    Depends: clean
     Desription: generates minified js files from Bower js files and
         any additional js files that are in ./js/ This allows
         developers to include additional non-Bower js into their
         generated site
 -------------------------------------------------------------------*/
-_gulp.task('js-build', ['clean'], function () {
+_gulp.task('js-build', ['clean-js'], function () {
 
     return _gulp.src(['bower_components/jquery/dist/jquery.js',
                      'bower_components/what-input/what-input.js',
@@ -72,12 +70,12 @@ _gulp.task('js-build', ['clean'], function () {
 
 /*------------------------------------------------------------------
     Task: jekyll-build
-    Depends: sass-build, js-build
     Desription: runs the Jekyll build process which parses all
         markdown and generates static HTML in ./_site
-        Please note that Jekyll is not used to generate css and js
+        Please note that Jekyll is not used to generate css from
+        SASS or minify the JS, Gulp handles this
 -------------------------------------------------------------------*/
-_gulp.task('jekyll-build', ['sass-build', 'js-build'], function (done) {
+_gulp.task('jekyll-build', ['sass-build', 'js-build', 'clean-html'], function (done) {
 
     _jekyllBuildInProgress = true;
 
@@ -111,19 +109,40 @@ _gulp.task('jekyll-build', ['sass-build', 'js-build'], function (done) {
 });
 
 /*------------------------------------------------------------------
-    Task: clean
-    Depends: none
-    Desription: removes all generated files from ./site except the
-        .git directory
+    Task: clean-html
+    Desription: removes all generated files in /_site directory
+        *execpt* for JS and CSS and the .git directory
 -------------------------------------------------------------------*/
-_gulp.task('clean', function (done) {
-
-  _gulpUtil.log('Clean: removing all files in ./_site except the .git directory');
+_gulp.task('clean-html', function () {
 
   return del([
     '_site/**/*',
+    '!_site/**/*.js',
+    '!_site/**/*.css',
     // we don't want to clean the .git directory though so we negate the pattern
-    '!site/.git'
+    '!_site/.git'
+  ]);
+});
+
+/*------------------------------------------------------------------
+    Task: clean-js
+    Desription: removes all generated JS files in /_site directory
+-------------------------------------------------------------------*/
+_gulp.task('clean-js', function () {
+
+  return del([
+    '_site/**/*.js',
+  ]);
+});
+
+/*------------------------------------------------------------------
+    Task: clean-html
+    Desription: removes all generated CSS files in /_site directory
+-------------------------------------------------------------------*/
+_gulp.task('clean-css', function () {
+
+  return del([
+    '_site/**/*.css',
   ]);
 });
 
@@ -243,61 +262,109 @@ var gitPush = function (dir, branch, done) {
     });
 };
 
-//change tasks
-//-----------------------------------------------------------------------------------------------
+/*------------------------------------------------------------------
+    Task: watch
+    Desription: establishes main watches on files outside the /_site
+        directory.  If we were to watch those files, we would have an
+        infinite loop
+-------------------------------------------------------------------*/
+_gulp.task('watch', function(){
+    _gulp.watch(['**/*.html', '**/*.md', '**/*.markdown', 'img/**/*.*', '!_site/**/*.*'], ['jekyll-change']);
+    _gulp.watch(['_sass/**/*.scss', 'css/**/*.css', '!site/**/*.*'], ['sass-change']);
+    _gulp.watch(['js/**/*.js', '!_site/**/*.*'], ['js-change']);
+});
 
+/*------------------------------------------------------------------
+    Task: sass-change
+    Desription: triggered when SASS file(s) are changed in the source
+        directory, calls sass-build, then browsersync-reload, then
+        lets the watch know it's complete
+-------------------------------------------------------------------*/
 _gulp.task('sass-change', function (done) {
 
     if (!_jekyllBuildInProgress) {
-        _gulp.start('sass-build');
+        _gulpUtil.log('Gulp: SASS change(s) detected');
+        return _gulp.start('sass-build', done);
     }
+
+    done();
 });
 
+/*------------------------------------------------------------------
+    Task: js-change
+    Desription: triggered when JS file(s) are changed in the source
+        directory, calls js-build, then browsersync-reload, then
+        lets the watch know it's complete
+-------------------------------------------------------------------*/
 _gulp.task('js-change', function (done) {
 
     if (!_jekyllBuildInProgress) {
-        _runSequence('js-build', 'reload');
+        _gulpUtil.log('Gulp: JS change(s) detected');
+        return _runSequence('js-build', 'browsersync-reload', done);
     }
+
+    done();
 });
 
+/*------------------------------------------------------------------
+    Task: jekyll-change
+    Desription: triggered when HTML/Markedown/Images file(s) are
+        changed in the source directory, calls jekyll-build, 
+        then browsersync-reload, then lets the watch know it's
+        complete
+-------------------------------------------------------------------*/
 _gulp.task('jekyll-change', function (done) {
 
     if (!_jekyllBuildInProgress) {
-        _runSequence('jekyll-build', 'reload');
+        _gulpUtil.log('Gulp: HTML change(s) detected');
+        return _runSequence('jekyll-build', 'browsersync-reload', done);
     }
+
+    done();
 });
 
-//browsersync tasks
-//-----------------------------------------------------------------------------------------------
-
-_gulp.task('serve', ['jekyll-build'], function (done) {
+/*------------------------------------------------------------------
+    Task: browsersync-serve
+    Desription: builds site in /_site dir using jekyll, then
+        initializes browsersync
+-------------------------------------------------------------------*/
+_gulp.task('browsersync-serve', ['jekyll-build'], function (done) {
 
     _browserSync.init({
         server: {
             baseDir: './_site'
         }
     });
+    done();
+});
 
-    _gulp.watch(['**/*.html', '**/*.md', '**/*.markdown', 'img/**/*.*'], ['jekyll-change']);
-    _gulp.watch(['_sass/**/*.scss', 'css/**/*.css'], ['sass-change']);
-    _gulp.watch(['js/**/*.js'], ['js-change']);
+/*------------------------------------------------------------------
+    Task: browsersync-exit
+    Desription: exits an existing browsersync process
+-------------------------------------------------------------------*/
+_gulp.task('browsersync-exit', function (done) {
+    
+    if(_browserSync.active)
+        _browserSync.exit();
 
     done();
 });
 
-_gulp.task('exit', function (done) {
+/*------------------------------------------------------------------
+    Task: browsersync-reload
+    Desription: reloads an existing browsersync process
+-------------------------------------------------------------------*/
+_gulp.task('browsersync-reload', function (done) {
 
-    _browserSync.exit();
+    if(_browserSync.active)
+        _browserSync.reload();
+
     done();
 });
 
-_gulp.task('reload', function (done) {
-
-    _browserSync.reload();
-    done();
-});
-
-//default task
-//-----------------------------------------------------------------------------------------------
-
-_gulp.task('default', ['serve'], function () { });
+/*------------------------------------------------------------------
+    Task: default
+    Desription: builds entire site in /_site directory using Jekyll,
+        then initializes browsersync, and establishes watches
+-------------------------------------------------------------------*/
+_gulp.task('default', ['browsersync-serve', 'watch'], function () { });
