@@ -1,0 +1,446 @@
+---
+layout: post
+title:  "Git 101 (Tutorial)"
+date:   2017-06-01 09:00:00 -0400
+tags: git 101 help tutorial
+hero_img: "/img/hero/gimp-101-2200x1200.jpg"
+---
+
+This document provides an overview of git and its most useful commands.  Git can appear daunting to beginners, and many people prefer to use GUIs to handle their git interactions.  These tools and GUIs can be helpful for beginners, but you'll find git more useful and powerful once you understand the underlying commands.
+
+Learning git via the command line is actually much simpler than most people believe.  Hopefully this post will help you on your journey to becoming a git commandline guru!
+
+## Repository Creation ##
+
+There are two main ways to create new git repositories:
+
+1. New local repository on the file system.
+2. Cloning an existing remote repository which is hosted elsewhere (e.g. Github).
+
+### Creating a Local Repository (on your filesystem) ###
+
+Even if you are only planning on building software locally, it's a great idea to use git.  This will let you keep track of your changes, roll-back if neccessary, and manage your code across branches.
+
+To create a local git repository, simply go to the directory that will become your repository and initialize it.  Don't worry about initializing a new git repository in a directory that already contains files, it won't modify any existing files.
+
+    cd ~/projects/my-repo
+	git init
+
+Now you can continue to create / modify source code in that directory.  A best practice is to get your initial commit in place as quickly as possible.  When you're ready, you'll want to **stage** your source code for the initial commit.  To stage file(s) for a commit use the `git add` command.  You can stage an individual file or directory, or stage all files and directories from your current working directory.
+
+* To stage a single file use: `git add {filename}'`. Example: `git add my-file.html`
+* To stage a directory and all files inside that directory use: `git add {dir}`. Example: `git add ./my-directory`
+* To stage all files and directories that are inside your current working directory use: `git add .`
+
+In pracite the `git add .` command is the most commonly used.  It's intelligent enough to only stage files that have changed since the last commit, and it won't stage a file more than once.  If you haven't made an initial commit, this means that all files (with some exceptions like the `.git` directory) will be staged.
+
+Here's where many people get confused.  Staging files does not create a commit into the local repository.  Instead it's getting files ready for a commit.  This allows you to pick and choose what files will be included within the commit.  Go ahead and stage all the files in your local repository.
+
+    git add .
+
+You can check the files that are staged for a commit by using the `git status` command.
+
+    git status
+
+When you're ready, commit the files that are staged using the `git commit` command.  It's a good pratice to add a message for the commit by using the `-m` flag.
+
+    git commit -m "my first commit, like a boss yo!"
+
+You might be wondering what the point of staging files is?  It's useful if you want to break up your changes into two or more commits.  For example, let's say you haven't committed in a while, and you've made lots of changes.  You would have preferred to manke more granual commits, but it's too late for that.  With git it's no problem.  You just stage the files you want in your first commit, then commit.  Then stage the next set of files for your second commit, then commit, etc.
+
+Now you know the basics of staging and commit files to a local repository.
+
+### Cloning an Existing Repository from a Remote System (e.g. Github) ###
+
+If you've already created a repository somewhere else (e.g. Github) or you're jumping on to work with somebody else that already has a repository setup, you'll need to clone a repository.
+
+The default branch for repositories is called `master`.  Unless your team tells you otherwise, you should clone this branch to get started.
+
+To clone a repository's `master` branch, use the `git clone` command.  Make sure you're located in the directory in which you want to build a new directory for the repository.
+
+	git clone {url to remote repository}
+
+For example if you're in `~/projects` and run:
+
+	git clone https://github.com/rstrube/myproject.git
+
+Git will clone the repository to: `~/projects/myproject.git`.
+
+You can also add an additional parameter which determines which directory the repository should be cloned into.
+
+For example if you're in `~/projects` and run:
+
+	git clone https://github.com/rstrube/myproject.git super_duper_special_dir
+
+Git will clone the repository to `~/projects/super_duper_special_dir`.
+
+To clone a specific branch of a repository use the `-b {branch}` flag.
+
+For example if you're in `~/projects` and run:
+
+	git clone -b prototype https://github.com/rstrube/rstrube.github.io myproj_prototype
+
+Git will clone the `prototype` branch to `~/projects/myproj_prototype`.
+
+## Getting the Status of your Changes ##
+
+As we mentioned earlier, the `git status` can be used to get the statuses of the files in your local repository.  To elaborate, files can exist in one of several categories:
+
+1. **Staged** - these are files that will be included in the next commit to your local repository.
+2. **Unstaged** - these are files that will not be included in the next commit.
+3. **Untracked** - these are files that are ignored and will not be included in the next commit.
+4. **Committed** - these are files that have been committed to the local repository, but still need to be pushed to the remote repository(ies).
+
+To view all of your changes you can use the `status` command.
+
+	git status
+
+You'll see something like:
+
+	# On branch master
+	# Changes to be committed:
+	# (use "git reset HEAD ..." to unstage)
+	#
+	#modified: ModifiedClass.cs
+	#
+	# Changes not staged for commit:
+	# (use "git add ..." to update what will be committed)
+	# (use "git checkout -- ..." to discard changes in working directory)
+	#
+	#modified: NewClass.cs
+	#
+	# Untracked files:
+	# (use "git add ..." to include in what will be committed)
+	#
+	#Untracked.config
+
+## Staging Files ##
+
+We talked about staging files eariler, but let's go into more detail.
+
+To **stage** files, you must use the `git add` command.
+
+	git add {directory}
+
+Will stage all modified files in the specified directory and all sub-directories within that directory.
+
+Therefore
+
+	git add .
+
+Will stage all modified files in the current working directory and sub-directories of the current working directory.
+
+	git add {filename}
+
+Will stage a specific file.  This can also be important when staging a brand new file.
+
+As mentioned eariler, it's common to break up lots of changes across several commits.  To do this, stage the specific files you wish to to include in the first commit, then commit.  Then repeat the process with the files to be included in the second commit, and so on.
+
+## Committing Files ##
+
+We talked about committing files eariler, but let's go into more detail.
+
+It's important to remember that committing really means committing to your local repository.  To push your changes to your remote repository (e.g. Github) you need to execute a `push`.
+
+To commit all staged files to your local git repository use:
+
+	git commit
+
+This will open up a text editor and ask you for a commit message.
+
+Sometimes it's easier just to provide the message directly as part of the commit command.
+
+	git commit -m "super duper awesome commit!"
+
+## Working with Remote Repositories ##
+
+One of the most important aspects to using git as a source control system is that you utilize a remote repository to store your code.  Although technically you can get by with using only a local repository, if you were to have problems with your local machine, your code would be gone.  Using a service like Github ensures that you can backup your code without the danger of losing anything.
+
+In order to associate your local repository with a remote repository, you need to create at least one **remote**.  Think of remotes as a simple way of creating an alias or a bookmark to a URL which points to a remote repository.
+
+To begin with, you can always list out all existing remotes for a repository by using:
+
+	git remote -v
+
+You can easily add a remote to an existing local repository using the `git remote add` command.  Every remote requires a unique name.
+
+	git remote add myremote https://github.com/rstrube/rstrube.github.io
+
+Note: the default remote when using Github is called `origin`.
+
+To remove a remote you can use:
+	
+	git remote remove myremote
+
+To rename a remote you can use:
+
+	git remote rename {old name} {new name}
+
+## Pulling and Pushing ##
+
+Pulling and pushing allows you to download commits and upload local commits to and from the remote repository.
+
+The command to push all local commits to a remote repository is:
+
+	git push {remote name} {branch}
+
+If for some reason your local repository's branch is different than that branch name in the remote repository you want to push to, you can slightly modify the push command
+
+	git push {remote name} {local branch}:{remote branch}
+
+Example: if we are working on the `stable` branch in our local repository but we want to push it to the `master` branch of the remote repository we would use:
+
+	git push {remote name} stable:master
+
+The command to pull changes from a remote repository is:
+
+	git pull {remote name} {branch}
+
+Example:
+
+	git pull origin master
+
+To pull the `master` branch from the `origin` remote repository.
+
+## Listing Commits ##
+
+In order to list all commits in your local repository (including those pulled from remote repositories) use the `git log` command.
+
+There are many variations of this command, but the most useful are:
+
+	git log
+
+Lists all commits in a default view, you can press `space` to move to the next page, and `q` to exit.
+
+Example output:
+
+	commit fb74d318ee5552a3656bf7b96d55cdacd4895f86
+	Author: xxx@gmail.com <robstr@PC-ROBSTR-YOGA.saltsea.net>
+	Date:   Tue Dec 16 11:27:49 2014 -0600
+
+    	intial commit of ghost to azure
+
+	commit 62d55ac165e8d3ce96c87ddff1cf3357d5ee4a67
+	Merge: 5d69839 1c452a6
+	Author: xxxx <xxx@gmail.com>
+	Date:   Mon Dec 15 20:02:11 2014 +0000
+
+    	Merge branch 'master' @ 0.5.7 into stable
+
+	commit 1c452a605299861630a1d53ea2133f5a1f2f283f
+	Author: xxxx <xxx@gmail.com>
+	Date:   Mon Dec 15 17:09:24 2014 +0000
+
+    Version bump to 0.5.7
+
+	commit 7d0deebc086618835853f64489005f1a001b60aa
+	Merge: 4c12f5a ff321e0
+	Author: xxxx <xxx@gmail.com>
+	Date:   Mon Dec 15 15:58:08 2014 +0000
+
+    	Merge pull request #4653 from jaswilli/client-data
+
+    	Do not include url and author_id in post payload.
+
+For a more condensed version of the above use:
+
+	git log --oneline
+
+Example output:
+
+	fb74d31 intial commit of ghost
+	62d55ac Merge branch 'master' @ 0.5.7 into stable
+	1c452a6 Version bump to 0.5.7
+	7d0deeb Merge pull request #4653 from jaswilli/client-data
+
+For a more detailed view you can use:
+
+	git log --stats
+
+## The HEAD Commit ##
+
+The keyword `HEAD` is always used to indicate the most recent commit.  When using any of the commands listed below and not specifying a specific commit, git uses the `HEAD` commit by default.
+
+## Undoing Staged Files and Modifications (git reset and git checkout) ##
+
+There are many different approaches that can be used to undo changes.  Regardless of the approach, it's important to understand if the files you want to undo have been **staged** or **committed**.  In addition you should consider whether or not you've **pushed** your changes to a remote repository.
+
+Note that when using the `git reset` command, the flag `--mixed` is used by default when it's applicable.  `--mixed` will leave any modifications you have made intact.
+
+### Undoing the Staging to a Specific File (non destructive to working directory) ###
+
+Sometimes you simply want to unstage a specific file, so that it won't be included as part of the commit.
+
+Please note that in this case you are not overwriting the contents of the file that you want to **unstage**, you simply telling git not to include this file in the staging area.  This command will leave all your changes to the file intact.
+
+	git reset {filename}
+
+Which can be more explicitly typed as:
+
+    git reset HEAD {filename}
+
+Will unstage a specific file.  Once again, this will not overwrite the file, it will only unstage it.  Changes made will remain.
+
+### Undoing Staging of all Files (non destructive to working directory) ###
+
+If you incorrectly built up your staging area, sometimes it makes sense to simply unstage all files and then build up the staging area again.
+
+To do this, you can use the `git reset` command.
+
+    git reset
+
+Which can be more explicity typed as:
+
+    get reset --mixed HEAD
+
+Once again, this does not overwrite any files, it simply unstages them all.  All chages will remain.
+
+### Undoing the Staging and Modifications to a Specific File (destructive to working directory) ###
+
+If you want to simultaneosuly unstage a specific file and undo all changes to that file so that it matches the most recent commit (e.g. the `HEAD` commit), use the `git checkout` command.
+
+    git checkout {filename}
+
+Which can be more explicity typed as:
+
+    git checkout HEAD {filename}
+
+Once agin, this will unstage that specific file **and** undo any modiciations made to that specific file.
+
+### Undoing Staging and Modifications of all Files (destructive to working directory) ###
+
+If you want to simultaneosuly unstage all files and undo all changes so that repository matches the most recent commit (e.g. the `HEAD` commit), use the `git reset` with the `--hard` flag:
+
+    git reset --hard
+
+Which can be more explicity typed as:
+
+    git reset --hard HEAD
+
+Once agin, this will unstage all files **and** undo any modiciations made to files in your repository.
+
+## Undoing Commits ##
+
+But what happens if you've already created a commit?  Have no fear, git provides two ways to do this: a "safe" mechanism and a "rewrite history" mechanism.
+
+### Undoing a Commit the Safe Way (git revert) ###
+
+ If you want to undo an entire commit the "safe" way use the `git revert` command. It creates a new commit which rolls back all the changes introduced in a specific commit.
+
+	git revert 1c452a6
+
+Will create a new commit that completely undoes all the changes in the `1c452a6` commit.
+
+This is considered a "safer" way of doing things than the `git reset` command.  This is because it keeps the commit history completely intact.  The commit that is being rolled back still exists, you're simply creating a new commit that undoes all the changes in the targeted old commit.
+
+Another powerful aspect of using `git revert` is that it can target **any** commit, not just the most current.  You can target a commit from 5 months ago and still undo all changes that were made as part of that commit.
+
+Finally because `git revert` simply creates another commit that undoes the changes in a previous commit, your currently staged files and modified files remain completely intact.
+
+### Undoing Commits the "Rewrite History" Way (git reset) ###
+
+Please note that undoing commits after they have been pushed to a remote repository is **not recommended under any circumstance**.  This approach should only be used if you have been commiting locally and wish to undo some of of those local commits, or reorganize them.
+
+There are two ways of undoing local commits: `--mixed` or `--hard`
+
+#### Undoing Commits the "Rewrite History" Way for Commit Reorganization (--mixed) ####
+
+It's pretty common to want to reorganize one or more commits into several smaller more atomic commits.
+
+To do this use the `git reset` command with the commit ID of the commit you want to reset your local repository to. Note: `--mixed` is the default flag.
+
+    git reset {Commit ID}
+
+This command will reset your local repository to a specific commit, and unstage all files.  **It will, however, leave all modified files in your current working directly alone.**
+
+For example, let's assume you just created a large commit that you want to break into several smaller ones.
+
+    git reset HEAD~1
+
+Will reset your local repository to previous commit (before you created the large commit).
+
+    git add {specific file}
+    git add {specific file}
+    git add {specific dir}
+    ...
+
+Stages the specific files and directories you want to include in the first of your smaller commits.
+
+    git commit -m "smaller commit 1"
+
+Creates the first of the two smaller commits.
+
+    ggit add {specific file}
+    git add {specific file}
+    git add {specific dir}
+    ...
+
+Stages the rest of the files and directories you want to include in the second of your smaller commits.
+
+    git commit -m "smaller commit 2"
+
+Creates the second of the two smaller commits.
+
+#### Undoing Commits the "Rewrite History" Because You Messed Up (--hard) ####
+
+Let's say you just really messed up and created commits that you want to get rid of completely.
+
+To do this use the `git reset --hard` command with the commit ID of the commit you want to reset your local repository to.
+
+    git reset --hard {Commit ID}
+
+This command will reset your local repository to a specific commit, and unstage all files.  **It will remove any and all modified files that have been made since the commit your resetting to**.
+
+For example, let's assume you just created two commits that you really hate, and you just want to completely undo them and all the files you changed.
+
+    git reset --hard HEAD~2
+
+Will reset your local repository to the commit directly before the two new commits you created.  All staged files and all file modifications are completely removed and your local repository will look exactly the way it looked when you created the commit you're resetting to.
+
+## Viewing Older Commits (git checkout) ##
+
+The `git checkout` command performs three specific functions:
+
+1. It allows you to view the state of the local repository at the point in time when an old commit was made.
+3. It allows you to change branches.
+
+We're going to focus on #1 and save branching for another discussion
+
+### Viewing an Entire Older Commit (non destructive) ###
+
+There are times that you wish to view your local repository exactly the way it looked when a certain old commit was made.  The interesting thing about this operation is that **you will not loose any of your existing work and changes.** during this process.  You can also compile, and run the source code exactly the way it existed at the time of a specific commit.
+
+To view the repository the way it looked at the time of an older commit, use the `git checkout` command.  This temporarily affects your current working directory and all sub-directories, but you will not lose your existing work and changes.
+
+	git checkout {commit ID}
+
+Examples:
+
+	git checkout 62d55ac
+
+Will update the working directory and all sub-directories to match the exact state of the `62d55ac` commit. **Note that nothing you do at this point will be saved to your local repository.**.  This will also put you into "detached HEAD state", which basically means you shouldn't do any commits because they'll be completely lost.  This is actually a safety mechanism.
+
+You can also use a syntax to specify a certain number of versions before a given commit. This syntax looks like: `{commit ID}~{number back}`.
+
+For example:
+
+	git checkout HEAD~2
+
+Will update the working directory and all sub-directories to two commits before the most current commit.
+
+So if your `git log --oneline` is:
+
+	fb74d31 intial commit of ghost
+	62d55ac Merge branch 'master' @ 0.5.7 into stable
+	1c452a6 Version bump to 0.5.7
+	7d0deeb Merge pull request #4653 from jaswilli/client-data
+
+We would go back to commit ID `1c452a6`.
+
+To go pick up where you left off and get back to "attached HEAD state", including all of your modified and staged files run:
+
+    git checkout {branch}
+
+## Conclusion ##
+
+Hopefully you've enjoyed our Git 101 post.  We're planning on creating a second post in the future that covers branching in more detail.  For now, you should be completely comfortable working with basic git functions.

@@ -9,3 +9,14 @@
 
 //this imports _app.scss that is in the same directory as this file
 @import 'app';
+
+code {
+    font-size: .8125rem;
+}
+
+pre > code {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    font-size: .875rem;
+}

@@ -143,8 +143,13 @@ $paragraph-text-rendering: optimizeLegibility;
 $code-color: $black;
 $code-font-family: $font-family-monospace;
 $code-font-weight: $global-weight-normal;
-$code-background: $light-gray;
-$code-border: 1px solid $medium-gray;
+
+//rs: made changes to match gem.css
+//$code-background: $light-gray;
+//$code-border: 1px solid $medium-gray;
+$code-background: rgba(242, 242, 242, 1);
+$code-border: 1px solid rgba(21, 21, 21, 0.1);
+
 $code-padding: rem-calc(2 5 1);
 $anchor-color: $primary-color;
 $anchor-color-hover: scale-color($anchor-color, $lightness: -14%);
