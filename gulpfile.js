@@ -147,10 +147,10 @@ _gulp.task('clean-css', function () {
 });
 
 /*------------------------------------------------------------------
-    Task: git-add
+    Task: git-add-site
     Desription: runs 'git add .' for the /_site repo
 -------------------------------------------------------------------*/
-_gulp.task('git-add', ['jekyll-build'], function (done) {
+_gulp.task('git-add-site', ['jekyll-build'], function (done) {
 
     if (_browserSync.active)
         _browserSync.exit();
@@ -160,20 +160,20 @@ _gulp.task('git-add', ['jekyll-build'], function (done) {
 });
 
 /*------------------------------------------------------------------
-    Task: git-commit
+    Task: git-commit-site
     Desription: runs 'git commit' for the /_site repo
 -------------------------------------------------------------------*/
-_gulp.task('git-commit', ['git-add'], function (done) {
+_gulp.task('git-commit-site', ['git-add-site'], function (done) {
 
     var siteDir = _path.resolve(process.cwd(), './_site');
     gitCommit(siteDir, done);
 });
 
 /*------------------------------------------------------------------
-    Task: git-push
+    Task: git-push-site
     Desription: runs 'git push origin master' for the /_site repo
 -------------------------------------------------------------------*/
-_gulp.task('git-push', ['git-commit'], function (done) {
+_gulp.task('git-push-site', ['git-commit-site'], function (done) {
 
     var siteDir = _path.resolve(process.cwd(), './_site');
     gitPush(siteDir, 'master', done);
@@ -278,12 +278,12 @@ var gitPush = function (dir, branch, done) {
     git.on('exit', function (code) {
 
         if (code === 0) {
-            _gulpUtil.log('Git: [push origin source] Exited Successfully');
+            _gulpUtil.log('Git: [push origin ' + branch + '] Exited Successfully');
             done();
         }
 
         else
-            done('Git: [push origin source] Exited with Error Code = ' + code);
+            done('Git: [push origin ' + branch + '] Exited with Error Code = ' + code);
     });
 };
 
