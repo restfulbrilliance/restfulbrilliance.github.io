@@ -146,8 +146,10 @@ _gulp.task('clean-css', function () {
   ]);
 });
 
-//git tasks and functions
-//-----------------------------------------------------------------------------------------------
+/*------------------------------------------------------------------
+    Task: git-add
+    Desription: runs 'git add .' for the /_site repo
+-------------------------------------------------------------------*/
 _gulp.task('git-add', ['jekyll-build'], function (done) {
 
     if (_browserSync.active)
@@ -157,30 +159,53 @@ _gulp.task('git-add', ['jekyll-build'], function (done) {
     gitAdd(siteDir, done);
 });
 
+/*------------------------------------------------------------------
+    Task: git-commit
+    Desription: runs 'git commit' for the /_site repo
+-------------------------------------------------------------------*/
 _gulp.task('git-commit', ['git-add'], function (done) {
 
     var siteDir = _path.resolve(process.cwd(), './_site');
     gitCommit(siteDir, done);
 });
 
+/*------------------------------------------------------------------
+    Task: git-push
+    Desription: runs 'git push origin master' for the /_site repo
+-------------------------------------------------------------------*/
 _gulp.task('git-push', ['git-commit'], function (done) {
 
     var siteDir = _path.resolve(process.cwd(), './_site');
     gitPush(siteDir, 'master', done);
 });
 
+/*------------------------------------------------------------------
+    Task: git-add-source
+    Desription: runs 'git add .' for the <source> repo
+-------------------------------------------------------------------*/
 _gulp.task('git-add-source', function (done) {
     gitAdd(process.cwd(), done);
 });
 
+/*------------------------------------------------------------------
+    Task: git-commit-source
+    Desription: runs 'git commit' for the <source> repo
+-------------------------------------------------------------------*/
 _gulp.task('git-commit-source', ['git-add-source'], function (done) {
     gitCommit(process.cwd(), done);
 });
 
+/*------------------------------------------------------------------
+    Task: git-push-source
+    Desription: runs 'git push origin source' for the <source> repo
+-------------------------------------------------------------------*/
 _gulp.task('git-push-source', ['git-commit-source'], function (done) {
     gitPush(process.cwd(), 'source', done);
 });
 
+/*------------------------------------------------------------------
+    Git helper functions used to consolidate logic
+-------------------------------------------------------------------*/
 var gitAdd = function gitAdd(dir, done) {
 
     _gulpUtil.log('Git: [add .] in ' + dir);
@@ -265,8 +290,8 @@ var gitPush = function (dir, branch, done) {
 /*------------------------------------------------------------------
     Task: watch
     Desription: establishes main watches on files outside the /_site
-        directory.  If we were to watch those files, we would have an
-        infinite loop
+        directory.  If we were to watch those files, there would be
+        an infinite loop
 -------------------------------------------------------------------*/
 _gulp.task('watch', function(){
     _gulp.watch(['**/*.html', '**/*.md', '**/*.markdown', 'img/**/*.*', '!_site/**/*.*'], ['jekyll-change']);
@@ -365,6 +390,7 @@ _gulp.task('browsersync-reload', function (done) {
 /*------------------------------------------------------------------
     Task: default
     Desription: builds entire site in /_site directory using Jekyll,
-        then initializes browsersync, and establishes watches
+        then initializes browsersync. Also establishes watches on
+        all source files (files outside /_site directory)
 -------------------------------------------------------------------*/
 _gulp.task('default', ['browsersync-serve', 'watch'], function () { });
