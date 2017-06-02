@@ -1,4 +1,4 @@
-﻿/*
+/*
  * File: iframeResizer.js
  * Desc: Force iframes to size to content.
  * Requires: iframeResizer.contentWindow.js to be loaded into the target frame.
