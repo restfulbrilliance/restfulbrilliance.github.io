@@ -30,31 +30,47 @@
         ShopifyBuy.UI.onReady(client).then(function (ui) {
             ui.createComponent('product', {
                 id: [9835082895],
-                node: document.getElementById('product-component-87f619c2e5a'),
+                node: document.getElementById('product-component-93ffcfac9ff'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount%7D%7D',
                 options: {
                     "product": {
                         "variantId": "all",
+                        "width": "240px",
                         "contents": {
+                            "img": false,
                             "imgWithCarousel": false,
+                            "title": false,
                             "variantTitle": false,
+                            "price": true,
+                            "orderTime" : true,
                             "description": false,
                             "buttonWithQuantity": false,
                             "quantity": false,
-                            "footer" : true
+                            "footer": true
+                        },
+                        "text": {
+                            "button": 'Voeg toe aan winkelmand',
+                            "outOfStock": 'Out of stock',
+                            "unavailable": 'Unavailable',
                         },
                         "templates": {
-                            "footer": '<footer class="{{data.classes.product.footer}}">Please see <a href="www.google.com">terms and conditions</a></footer>'
+                            "orderTime" : '<p class="{{data.classes.product.orderTime}}">Leveringstijd: ongeveer 2 tot 3 weken</p>',
+                            "footer": '<footer class="{{data.classes.product.footer}}">'
+                            + '<p class="footerTerms">Hier vindt u de <a class="footerLink" href="www.google.com">voorwaarden</a></p>'
+                            + '<p>Om het product te bestellen bel 0800 4540115</p>'
+                            + '</footer>'
                         },
                         "order": [
-                            'img',
-                            'title',
                             'price',
+                            'orderTime',
                             'button',
-                            'footer'
+                            'footer',
                         ],
                         "classes": {
+                            "orderTime" : "product-orderTime",
                             "footer": "product-footer",
+                            "footerTerms" : "footerTerms",
+                            "footerLink": "footerLink"
                         },
                         "styles": {
                             "product": {
@@ -65,50 +81,43 @@
                                     "margin-bottom": "50px"
                                 }
                             },
-                            "footer": {
-                                "color": "grey",
-                                "margin-top": "14.5px",
+                            "prices": {
+                                "margin": "0 0 5px 0"
+                            },
+                            "price": {
+                                "font-family": "Open Sans, sans-serif",
+                                "font-size": "18px",
+                                "font-weight": "bold",
+                                "color": "black",
+                            },
+                            "orderTime":{
+                                "margin": "0 0 10px 0"
+                            },
+                            "buttonWrapper" : {
+                                "margin": "0 0 10px 0"
                             },
                             "button": {
                                 "background-color": "#4196b4",
                                 "font-family": "Open Sans, sans-serif",
                                 "font-size": "13px",
-                                "padding-top": "14.5px",
-                                "padding-bottom": "14.5px",
+                                "padding": "15px 26px",
                                 ":hover": {
                                     "background-color": "#3b87a2"
                                 },
-                                "border-radius": "2px",
+                                "border-radius": "1px",
                                 ":focus": {
                                     "background-color": "#3b87a2"
                                 },
                                 "font-weight": "bold"
                             },
-                            "variantTitle": {
-                                "font-family": "Open Sans, sans-serif",
-                                "font-weight": "normal"
+                            "footer": {
                             },
-                            "title": {
-                                "font-family": "Open Sans, sans-serif"
+                            "footerTerms" : {
+                                "color": "grey",
+                                "margin" : "0 0 5px 0"
                             },
-                            "description": {
-                                "font-family": "Open Sans, sans-serif",
-                                "font-weight": "normal"
-                            },
-                            "price": {
-                                "font-family": "Open Sans, sans-serif",
-                                "font-size": "18px",
-                                "font-weight": "normal"
-                            },
-                            "quantityInput": {
-                                "font-size": "13px",
-                                "padding-top": "14.5px",
-                                "padding-bottom": "14.5px"
-                            },
-                            "compareAt": {
-                                "font-size": "15.299999999999999px",
-                                "font-family": "Open Sans, sans-serif",
-                                "font-weight": "normal"
+                            "footerLink" : {
+                                "color" : "grey"
                             }
                         },
                         "googleFonts": [
@@ -148,72 +157,6 @@
                             "Open Sans"
                         ]
                     },
-                    "modalProduct": {
-                        "contents": {
-                            "img": false,
-                            "imgWithCarousel": true,
-                            "variantTitle": false,
-                            "buttonWithQuantity": true,
-                            "button": false,
-                            "quantity": false
-                        },
-                        "styles": {
-                            "product": {
-                                "@media (min-width: 601px)": {
-                                    "max-width": "100%",
-                                    "margin-left": "0px",
-                                    "margin-bottom": "0px"
-                                }
-                            },
-                            "button": {
-                                "background-color": "#4196b4",
-                                "font-family": "Open Sans, sans-serif",
-                                "font-size": "13px",
-                                "padding-top": "14.5px",
-                                "padding-bottom": "14.5px",
-                                ":hover": {
-                                    "background-color": "#3b87a2"
-                                },
-                                "border-radius": "2px",
-                                ":focus": {
-                                    "background-color": "#3b87a2"
-                                },
-                                "font-weight": "bold"
-                            },
-                            "variantTitle": {
-                                "font-family": "Open Sans, sans-serif",
-                                "font-weight": "normal"
-                            },
-                            "title": {
-                                "font-family": "Open Sans, sans-serif"
-                            },
-                            "description": {
-                                "font-family": "Open Sans, sans-serif",
-                                "font-weight": "normal"
-                            },
-                            "price": {
-                                "font-family": "Open Sans, sans-serif",
-                                "font-weight": "normal"
-                            },
-                            "quantityInput": {
-                                "font-size": "13px",
-                                "padding-top": "14.5px",
-                                "padding-bottom": "14.5px"
-                            },
-                            "compareAt": {
-                                "font-family": "Open Sans, sans-serif",
-                                "font-weight": "normal"
-                            }
-                        },
-                        "googleFonts": [
-                            "Open Sans",
-                            "Open Sans",
-                            "Open Sans",
-                            "Open Sans",
-                            "Open Sans",
-                            "Open Sans"
-                        ]
-                    },
                     "toggle": {
                         "styles": {
                             "toggle": {
@@ -249,18 +192,9 @@
                             "Open Sans"
                         ]
                     },
-                    "productSet": {
-                        "styles": {
-                            "products": {
-                                "@media (min-width: 601px)": {
-                                    "margin-left": "-20px"
-                                }
-                            }
-                        }
-                    }
                 }
             });
         });
     }
 })();
-      /*]]>*/
+/*]]>*/
