@@ -56,8 +56,8 @@
                         "templates": {
                             "orderTime" : '<p class="{{data.classes.product.orderTime}}">Leveringstijd: ongeveer 2 tot 3 weken</p>',
                             "footer": '<footer class="{{data.classes.product.footer}}">'
+                            + '<p>Om het product te bestellen bel <br/>0800 4540115</p>'
                             + '<p class="footerTerms">Hier vindt u de <a class="footerLink" href="www.google.com">voorwaarden</a></p>'
-                            + '<p>Om het product te bestellen bel 0800 4540115</p>'
                             + '</footer>'
                         },
                         "order": [
@@ -114,7 +114,7 @@
                             },
                             "footerTerms" : {
                                 "color": "grey",
-                                "margin" : "0 0 5px 0"
+                                "margin" : "5px 0 0 0"
                             },
                             "footerLink" : {
                                 "color" : "grey"
