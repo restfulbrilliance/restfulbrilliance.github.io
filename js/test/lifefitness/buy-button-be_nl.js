@@ -30,7 +30,7 @@
         ShopifyBuy.UI.onReady(client).then(function (ui) {
             ui.createComponent('product', {
                 id: [9835082895],
-                node: document.getElementById('product-component-93ffcfac9ff'),
+                node: document.getElementById('product-component-be_nl'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount%7D%7D',
                 options: {
                     "product": {
@@ -49,14 +49,14 @@
                             "footer": true
                         },
                         "text": {
-                            "button": 'Voeg toe aan winkelmand',
+                            "button": 'In de winkelmaand',
                             "outOfStock": 'Out of stock',
                             "unavailable": 'Unavailable',
                         },
                         "templates": {
                             "orderTime" : '<p class="{{data.classes.product.orderTime}}">Leveringstijd: ongeveer 2 tot 3 weken</p>',
                             "footer": '<footer class="{{data.classes.product.footer}}">'
-                            + '<p>Om het product te bestellen bel <br/>0800 4540115</p>'
+                            + '<p>Heft u vragen? Wij helpen u graag verder! Bel 018 064 6706</p>'
                             + '<p class="footerTerms">Hier vindt u de <a class="footerLink" href="www.google.com">voorwaarden</a></p>'
                             + '</footer>'
                         },
@@ -100,7 +100,7 @@
                                 "background-color": "#4196b4",
                                 "font-family": "Open Sans, sans-serif",
                                 "font-size": "13px",
-                                "padding": "15px 26px",
+                                "padding": "16px 50px",
                                 ":hover": {
                                     "background-color": "#3b87a2"
                                 },
