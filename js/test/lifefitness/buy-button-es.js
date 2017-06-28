@@ -29,7 +29,7 @@
 
         ShopifyBuy.UI.onReady(client).then(function (ui) {
             ui.createComponent('product', {
-                id: [9835082895],
+                handle: ['PH-PCXEE-3WXXD-0107C'],
                 node: document.getElementById('product-component-es'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount%7D%7D',
                 options: {
@@ -56,7 +56,7 @@
                         "templates": {
                             "orderTime" : '<p class="{{data.classes.product.orderTime}}">Tiempo estimado de entrega: 2/3 semanas</p>',
                             "footer": '<footer class="{{data.classes.product.footer}}">'
-                            + '<p>Tiene alguna pregunta? Llamenos al <br/>0900 505 741</p>'
+                            + '<p>¿Tiene alguna pregunta? Llámenos al 0900 505 741</p>'
                             + '<p class="footerTerms">Vea las <a class="footerLink" href="www.google.com">condiciones generales</a></p>'
                             + '</footer>'
                         },
@@ -85,7 +85,7 @@
                                 "margin": "0 0 5px 0"
                             },
                             "price": {
-                                "font-family": "Open Sans, sans-serif",
+                                "font-family": "Lato, Helvetica Neue, Arial, sans-serif",
                                 "font-size": "18px",
                                 "font-weight": "bold",
                                 "color": "black",
@@ -98,17 +98,16 @@
                             },
                             "button": {
                                 "background-color": "#4196b4",
-                                "font-family": "Open Sans, sans-serif",
-                                "font-size": "13px",
-                                "padding": "16px 59px",
+                                "font-family": "Lato, Helvetica Neue, Arial, sans-serif",
+                                "font-size": "15px",
+                                "padding": "15px 62px",
                                 ":hover": {
                                     "background-color": "#3b87a2"
                                 },
                                 "border-radius": "1px",
                                 ":focus": {
                                     "background-color": "#3b87a2"
-                                },
-                                "font-weight": "bold"
+                                }
                             },
                             "footer": {
                             },
@@ -121,12 +120,7 @@
                             }
                         },
                         "googleFonts": [
-                            "Open Sans",
-                            "Open Sans",
-                            "Open Sans",
-                            "Open Sans",
-                            "Open Sans",
-                            "Open Sans"
+                            "Lato",
                         ]
                     },
                     "cart": {
@@ -136,7 +130,7 @@
                         "styles": {
                             "button": {
                                 "background-color": "#4196b4",
-                                "font-family": "Open Sans, sans-serif",
+                                "font-family": "Lato, Helvetica Neue, Arial, sans-serif",
                                 "font-size": "13px",
                                 "padding-top": "14.5px",
                                 "padding-bottom": "14.5px",
@@ -154,13 +148,13 @@
                             }
                         },
                         "googleFonts": [
-                            "Open Sans"
+                            "Lato"
                         ]
                     },
                     "toggle": {
                         "styles": {
                             "toggle": {
-                                "font-family": "Open Sans, sans-serif",
+                                "font-family": "Lato, Helvetica Neue, Arial, sans-serif",
                                 "background-color": "#4196b4",
                                 ":hover": {
                                     "background-color": "#3b87a2"
@@ -175,21 +169,20 @@
                             }
                         },
                         "googleFonts": [
-                            "Open Sans"
+                            "Lato"
                         ]
                     },
                     "option": {
                         "styles": {
                             "label": {
-                                "font-family": "Open Sans, sans-serif"
+                                "font-family": "Lato, Helvetica Neue, Arial, sans-serif"
                             },
                             "select": {
-                                "font-family": "Open Sans, sans-serif"
+                                "font-family": "Lato, Helvetica Neue, Arial, sans-serif"
                             }
                         },
                         "googleFonts": [
-                            "Open Sans",
-                            "Open Sans"
+                            "Lato"
                         ]
                     },
                 }
