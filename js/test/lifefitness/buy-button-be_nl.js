@@ -50,14 +50,14 @@
                         },
                         "text": {
                             "button": 'In de winkelmaand',
-                            "outOfStock": 'Out of stock',
-                            "unavailable": 'Unavailable',
+                            "outOfStock": 'Niet op voorraad',
+                            "unavailable": 'Product niet beschikbaar',
                         },
                         "templates": {
                             "orderTime" : '<p class="{{data.classes.product.orderTime}}">Leveringstijd: ongeveer 2 tot 3 weken</p>',
                             "footer": '<footer class="{{data.classes.product.footer}}">'
-                            + '<p>Heft u vragen? Wij helpen u graag verder! Bel 018 064 6706</p>'
-                            + '<p class="footerTerms">Hier vindt u de <a class="footerLink" href="www.google.com">voorwaarden</a></p>'
+                            + '<p>Heeft u vragen? Wij helpen u graag verder! Bel 0800 -0093</p>'
+                            + '<p class="footerTerms">Hier vindt u de <a class="footerLink" href="https://www.lifefitness.nl/nl/shop-be-terms-and-conditions">voorwaarden</a></p>'
                             + '</footer>'
                         },
                         "order": [
@@ -126,6 +126,14 @@
                     "cart": {
                         "contents": {
                             "button": true
+                        },
+                        "text" : {
+                            "title": "Winkelwagen",
+                            "empty": "Uw winkelwagen is leeg.",
+                            "button": "Bestellen",
+                            "total": "Totaal",
+                            "currency": "EUR",
+                            "notice": "Prijs is inclusief BTW. Bezorg en kortingscodes kunnen worden ingewisseld bij het bestellen."
                         },
                         "styles": {
                             "button": {

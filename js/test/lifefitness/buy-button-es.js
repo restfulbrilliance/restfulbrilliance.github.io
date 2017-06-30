@@ -50,8 +50,8 @@
                         },
                         "text": {
                             "button": 'Añadir a la cesta',
-                            "outOfStock": 'Out of stock',
-                            "unavailable": 'Unavailable',
+                            "outOfStock": 'Fuera de stock',
+                            "unavailable": 'Producto no disponible',
                         },
                         "templates": {
                             "orderTime" : '<p class="{{data.classes.product.orderTime}}">Tiempo estimado de entrega: 2/3 semanas</p>',
@@ -126,6 +126,14 @@
                     "cart": {
                         "contents": {
                             "button": true
+                        },
+                        "text": {
+                            "title": "Cesta",
+                            "empty": "Su cesta está vacía.",
+                            "button": "Pedido",
+                            "total": "Total",
+                            "currency": "EUR",
+                            "notice": "IVA incluido en el precio. El coste de envío y los códigos de descuento se pueden ingresar durante el proceso de pedido."
                         },
                         "styles": {
                             "button": {

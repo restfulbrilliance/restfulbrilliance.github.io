@@ -50,14 +50,14 @@
                         },
                         "text": {
                             "button": 'Ajouter au panier',
-                            "outOfStock": 'Out of stock',
-                            "unavailable": 'Unavailable',
+                            "outOfStock": 'Rupture de stock',
+                            "unavailable": 'Produit indisponible',
                         },
                         "templates": {
                             "orderTime" : '<p class="{{data.classes.product.orderTime}}">Délai de livraison: 2-3 semaines</p>',
                             "footer": '<footer class="{{data.classes.product.footer}}">'
                             + '<p>En cas de questions, veuillez appeler<br/>0800 930 95</p>'
-                            + '<p class="footerTerms">Vous trouverez ici les <a class="footerLink" href="www.google.com">conditions générales</a></p>'
+                            + '<p class="footerTerms">Vous trouverez ici les <a class="footerLink" href="https://www.lifefitness.nl/fr/shop-be-terms-and-conditions">conditions générales</a></p>'
                             + '</footer>'
                         },
                         "order": [
@@ -126,6 +126,14 @@
                     "cart": {
                         "contents": {
                             "button": true
+                        },
+                        "text" : {
+                            "title": "Panier",
+                            "empty": "Votre panier est vide.",
+                            "button": "Valider ma commande",
+                            "total": "Total",
+                            "currency": "EUR",
+                            "notice": "La TVA est comprise dans le prix indiqué. Les frais de livraison seront mentionnés sur la facture après validation de votre commande sur le Site."
                         },
                         "styles": {
                             "button": {

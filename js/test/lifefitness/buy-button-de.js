@@ -50,14 +50,14 @@
                         },
                         "text": {
                             "button": 'In den Warenkorb',
-                            "outOfStock": 'Out of stock',
-                            "unavailable": 'Unavailable',
+                            "outOfStock": 'Ausverkauft',
+                            "unavailable": 'Product nicht verfügbar',
                         },
                         "templates": {
                             "orderTime" : '<p class="{{data.classes.product.orderTime}}">Lieferzeit: Ungefähr 2-3 Wochen</p>',
                             "footer": '<footer class="{{data.classes.product.footer}}">'
                             + '<p>Wir helfen Ihnen gerne weiter unter der Nummer 0800 454 0115</p>'
-                            + '<p class="footerTerms">Hier finden Sie die <a class="footerLink" href="www.google.com">allgemeinen Geschäftsbedingungen</a></p>'
+                            + '<p class="footerTerms">Hier finden Sie die <a class="footerLink" href="https://lifefitness.de/allgemeine-gesch%C3%A4ftsbedingungen">allgemeinen Geschäftsbedingungen</a></p>'
                             + '</footer>'
                         },
                         "order": [
@@ -126,6 +126,14 @@
                     "cart": {
                         "contents": {
                             "button": true
+                        },
+                        "text": {
+                            "title": "Warenkorb",
+                            "empty": "Ihr Warenkorb ist leer.",
+                            "button": "Auschecken",
+                            "total": "Gesamtbetrag",
+                            "currency": "EUR",
+                            "notice": "Alle Preise verstehen sich inklusiv der gesetzlichen Mehrwertsteuer. Versandkosten und Rabatt-Codes werden beim Auschecken verrechnet."
                         },
                         "styles": {
                             "button": {
