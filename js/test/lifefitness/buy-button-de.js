@@ -22,14 +22,14 @@
 
     function ShopifyBuyInit() {
         var client = ShopifyBuy.buildClient({
-            domain: 'life-fitness-developement.myshopify.com',
-            apiKey: '744e6ce87c4d962398a33ffa6c8b96f2',
+            domain: 'life-fitness-dach-german.myshopify.com',
+            apiKey: '86e8c6d38a4cb32594cdad8913ba08e3',
             appId: '6',
         });
 
         ShopifyBuy.UI.onReady(client).then(function (ui) {
             ui.createComponent('product', {
-                handle: ['PH-PCXEE-3WXXD-0107C'],
+                handle: ['C1-XX03-0104_TKC-000X-0205'],
                 node: document.getElementById('product-component-de'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount%7D%7D',
                 options: {

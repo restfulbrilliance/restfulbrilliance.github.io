@@ -22,14 +22,14 @@
 
     function ShopifyBuyInit() {
         var client = ShopifyBuy.buildClient({
-            domain: 'life-fitness-developement.myshopify.com',
-            apiKey: '744e6ce87c4d962398a33ffa6c8b96f2',
+            domain: 'life-fitness-benelux-french.myshopify.com',
+            apiKey: 'd0b26a91c2211da48381d7705ea3cb9a',
             appId: '6',
         });
 
         ShopifyBuy.UI.onReady(client).then(function (ui) {
             ui.createComponent('product', {
-                handle: ['PH-PCXEE-3WXXD-0107C'],
+                handle: ['IC-LFIC6B1-01'],
                 node: document.getElementById('product-component-be_fr'),
                 moneyFormat: '%E2%82%AC%7B%7Bamount%7D%7D',
                 options: {
