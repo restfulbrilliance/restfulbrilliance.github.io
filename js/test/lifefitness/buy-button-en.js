@@ -127,6 +127,14 @@
                         "contents": {
                             "button": true
                         },
+                        "text" : {
+                            "title": 'Cart',
+                            "empty": 'Your cart is empty.',
+                            "button": 'Checkout',
+                            "total": 'Total',
+                            "currency": 'GBP',
+                            "notice": 'VAT is included in price. Shipping and discount codes are added at checkout.',
+                        },
                         "styles": {
                             "button": {
                                 "background-color": "#4196b4",
